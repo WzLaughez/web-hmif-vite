@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
 import Footer from './layouts/Footer'
-import Header from './layouts/Header'
+import Navbar from './layouts/Navbar'
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    <Header/>
-
-    <Footer/>
+    <div className='bg-slate-900'>
+    <Navbar/>
+    </div>
+    {/* <Footer/> */}
     </>
   )
 }
