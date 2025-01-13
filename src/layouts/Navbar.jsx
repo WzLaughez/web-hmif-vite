@@ -1,6 +1,4 @@
-'use client'
-
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -32,10 +30,41 @@ const callsToAction = [
 
 export default function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 20;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  const linkClasses = [
+    'text-sm/6',
+    'relative',
+    'before:absolute',
+    'before:bottom-0',
+    'before:left-0',
+    'before:h-0.5',
+    'before:w-full',
+    'before:bg-white',
+    'before:scale-x-0',
+    'before:origin-left',
+    'before:transition-transform',
+    'before:duration-500',
+    'before:ease-in-out',
+    'hover:before:scale-x-100',
+    scrolled ? 'text-white' : 'text-black'
+  ].join(' ');
 
   return (
-    <header className="bg-white border-b-2">
-      <nav aria-label="Global" className=" mx-14 my-1 flex max-w-7xl items-center justify-between p-6 lg:px-8 ">
+    <>
+    <header className={`fixed top-0 left-0 right-0 w-full font-poppins z-50 transition-all duration-300 
+      ${scrolled ? 'bg-blue-600 shadow-lg' : 'bg-transparent'}`}>
+      <nav aria-label="Global" className=" container mx-auto flex items-center justify-between p-4 lg:px-8 ">
         <div className="flex lg:flex-1">
           
           <a href="#" className="-m-1.5 p-1.5">
@@ -67,9 +96,8 @@ export default function NavBar() {
 
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm/6 transition border-b-2 border-white ease-in-out duration-300
-          hover:border-blue-500 cursor-pointer text-gray-900">
-              Product
+            <PopoverButton className={`flex ${linkClasses}`}>
+              Home
               <ChevronDownIcon aria-hidden="true" className="size-5 flex-none text-gray-400" />
             </PopoverButton>
 
@@ -102,8 +130,11 @@ export default function NavBar() {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 transition border-b-2 border-white ease-in-out duration-300
-          hover:border-blue-500 cursor-pointer text-gray-900 hover:bg-gray-100"
+                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 relative 
+          before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full 
+          before:bg-blue-500 before:scale-x-0 before:origin-left before:transition-transform 
+          before:duration-300 before:ease-in-out
+          hover:before:scale-x-100 hover:bg-gray-100"
                   >
                     <item.icon aria-hidden="true" className="size-5 flex-none text-gray-400" />
                     {item.name}
@@ -113,17 +144,14 @@ export default function NavBar() {
             </PopoverPanel>
           </Popover>
 
-          <a href="#" className="text-sm/6 transition border-b-2 border-white ease-in-out duration-300
-          hover:border-blue-500 cursor-pointer text-gray-900">
-            Features
+          <a href="/Features" className={linkClasses}>
+            Profil
           </a>
-          <a href="#" className="text-sm/6 transition border-b-2 border-white ease-in-out duration-300
-          hover:border-blue-500 cursor-pointer text-gray-900">
-            Marketplace
+          <a href="#" className={linkClasses}>
+            Informasi
           </a>
-          <a href="#" className="text-sm/6 transition border-b-2 border-white ease-in-out duration-300
-          hover:border-blue-500 cursor-pointer text-gray-900">
-            Company
+          <a href="#" className={linkClasses}>
+            Galeri
           </a>
         </PopoverGroup>
         
@@ -194,5 +222,7 @@ export default function NavBar() {
         </DialogPanel>
       </Dialog>
     </header>
+    
+    </>
   )
 }

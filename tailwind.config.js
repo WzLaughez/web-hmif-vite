@@ -9,6 +9,12 @@ export default {
       colors: {
         customBlue: '#214478', // Add your custom color here
       },
+      fontFamily:{
+        poppins:['Poppins'],
+        sans: ['Roboto', 'Arial', 'sans-serif'], // Primary font
+        serif: ['Merriweather', 'Georgia', 'serif'], // Secondary font
+        mono: ['Courier New', 'monospace'], // Monospace font
+      }
     },
   },
   plugins: [],

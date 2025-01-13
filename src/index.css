@@ -2,12 +2,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* 
-Font #000000
-#5599ff
-#214478
-*/
-*{
-    font-family: "Poppins";
-}
