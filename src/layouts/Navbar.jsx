@@ -57,13 +57,13 @@ export default function NavBar() {
     'before:duration-500',
     'before:ease-in-out',
     'hover:before:scale-x-100',
-    scrolled ? 'text-white' : 'text-black'
+    scrolled ? 'text-black' : 'text-white'
   ].join(' ');
 
   return (
     <>
     <header className={`fixed top-0 left-0 right-0 w-full font-poppins z-50 transition-all duration-300 
-      ${scrolled ? 'bg-blue-600 shadow-lg' : 'bg-transparent'}`}>
+      ${scrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
       <nav aria-label="Global" className=" container mx-auto flex items-center justify-between p-4 lg:px-8 ">
         <div className="flex lg:flex-1">
           
