@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import Footer from './layouts/Footer'
 import Navbar from './layouts/Navbar'
 import Home from './Components/Home'
+
 function App() {
   const [count, setCount] = useState(0)
 

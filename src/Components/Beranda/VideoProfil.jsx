@@ -1,29 +1,50 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import the AOS styles
 
 const VideoProfil = () => {
+  const videoId = "utZQ10UBXe8";
+  useEffect(() => {
+    AOS.init({
+      duration: 1200, // Animation duration in milliseconds
+      once: false, // Run animation only once
+    });
+  }, []);
+  const YouTubeEmbed = ({ videoId }) => (
+    <div className="relative w-full pt-[56.25%]">
+      <iframe
+        className="absolute top-0 left-0 w-full h-full"
+        src={`https://www.youtube.com/embed/${videoId}`}
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+    </div>
+  );
   return (
     <>
-    <div className='border-b-2 font-poppins'>
+
+    <div className='border-b-2 font-poppins' data-aos="fade-up" >
 
     <header className="bg-white items-center flex">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 ">
-            <h1 className="py-1 border-b-2 text-3xl font-semibold tracking-tight text-gray-900 ">Video Profil</h1>
+            <h1 className="border-customBlue2 py-1 border-b-2 text-3xl font-semibold tracking-tight text-gray-900">Video Profil</h1>
           </div>
     </header>
-    <div className='bg-slate-400 flex justify-center space-x-24 p-10 m-10 h-96 '>
-      <main>
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 border-4 ">
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo incidunt facere ea officiis deserunt quas doloremque nobis dignissimos quam magnam debitis perspiciatis consectetur eaque voluptas, itaque facilis necessitatibus inventore laudantium?
+    <div className=" py-10 " >
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden" >
+            <YouTubeEmbed videoId={videoId} />
+            <div className="p-6">
+              <p className="text-gray-600">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo incidunt facere ea officiis 
+   
               </p>
             </div>
-      </main>
-      <main>
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 border-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam delectus unde autem adipisci, quibusdam velit ipsa quo fuga, repudiandae possimus! Saepe, ipsam! Quis fuga ut laboriosam a doloremque eius!
-            </div>
-      </main>
-    </div>
+          </div>
+        </div>
+      </div>
     </div>
     </>
   )

@@ -43,14 +43,15 @@ export default function NavBar() {
   }, []);
   
   const linkClasses = [
-    'text-sm/6',
+    // 'text-lg',
+    // 'text-sm/6',
     'relative',
     'before:absolute',
     'before:bottom-0',
     'before:left-0',
     'before:h-0.5',
     'before:w-full',
-    'before:bg-white',
+    'before:bg-black',
     'before:scale-x-0',
     'before:origin-left',
     'before:transition-transform',
@@ -62,9 +63,9 @@ export default function NavBar() {
 
   return (
     <>
-    <header className={`fixed top-0 left-0 right-0 w-full font-poppins z-50 transition-all duration-300 
+    <header className={`fixed p-3 top-0 left-0 right-0 w-full font-poppins z-50 transition-all duration-300 
       ${scrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
-      <nav aria-label="Global" className=" container mx-auto flex items-center justify-between p-4 lg:px-8 ">
+      <nav aria-label="Global" className=" container mx-auto flex items-center justify-between p-3 lg:px-14 ">
         <div className="flex lg:flex-1">
           
           <a href="#" className="-m-1.5 p-1.5">
