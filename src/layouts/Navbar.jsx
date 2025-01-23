@@ -74,10 +74,10 @@ export default function NavBar() {
             <span className="sr-only">Your Company</span>
             <img
               alt=""
-              src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+              src="\LogoHMIF-removebg-preview.png"
               className="h-8 w-auto"
               />
-                <h1 className='font-semibold'>
+                <h1 className={`font-semibold ${scrolled ? 'text-black' : 'text-white'} `}>
                   HMIF UNTAN
                 </h1>
               </div>
