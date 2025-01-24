@@ -6,6 +6,7 @@ import Navbar from './layouts/Navbar'
 import Home from './Components/Home'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import ScrollToTopButton from './layouts/ScrollToTopButton'
 
 AOS.init({
   once: false,
@@ -15,8 +16,9 @@ function App() {
 
   return (
     <>
-    {/* <Navbar/> */}
+    <Navbar/>
     <Home/>
+    <ScrollToTopButton/>
     </>
   )
 }

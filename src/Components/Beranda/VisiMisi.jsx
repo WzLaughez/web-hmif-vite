@@ -16,17 +16,17 @@ const VisiMisi = () => {
       
       
       {/* Main Content */}
-      <div className="relative px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+      <div className="relative px-4 sm:px-6 lg:px-8 py-6 sm:py-10 mb-12 mt-12">
         <div className="max-w-7xl mx-auto">
           
-        <div className="bg-white rounded-lg shadow-2xl p-6 mb-6 h-full flex justify-center">
+        <div className="bg-white rounded-lg shadow-xl p-6 mb-6 h-full flex justify-center">
           <div className="prose w-full max-w-xl "> {/* Adjust max-w-xl to your preferred width */}
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex justify-center">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 pb-2 border-b-2 border-customBlue2">
             Tentang HMIF
           </h1>
         </div>
-            <p className="text-gray-700 text-center">
+            <p className="text-center">
               Himpunan Mahasiswa Informatika Fakultas Teknik Universitas Tanjungpura atau yang disingkat HMIF FT UNTAN adalah Organisasi Kemahasiswaan yang berfungsi sebagai wadah komunikasi, sarana pembinaan dan pengembangan sikap, mental, akademis serta intelektual yang menjunjung tinggi keimanan dan ketaqwaan kepada Tuhan Yang Maha Esa di Jurusan Informatika Fakultas Teknik Universitas Tanjungpura
             </p>
           </div>
@@ -43,7 +43,7 @@ const VisiMisi = () => {
           </h1>
         </div>
             
-                <p className="text-gray-700">
+                <p className="">
                 Mewujudkan Himpunan Mahasiswa Informatika UNTAN sebagai organisasi yang memiliki pribadi-pribadi yang unggul dan profesional.
                 </p>
               </div>
@@ -81,7 +81,7 @@ const VisiMisi = () => {
             Tujuan HMIF
           </h1>
         </div>
-              <p className="text-gray-700 text-center">
+              <p className=" text-center">
               HMIF FT UNTAN berfungsi sebagai wadah komunikasi, sarana pembinaan dan pengembangan sikap, mental, akademis serta intelektual yang menjunjung tinggi keimanan dan ketaqwaan kepada Tuhan Yang Maha Esa di Jurusan Informatika Fakultas Teknik Universitas Tanjungpura.
               </p>
             </div>

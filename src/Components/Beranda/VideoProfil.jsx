@@ -25,7 +25,7 @@ const VideoProfil = () => {
   return (
     <>
 
-    <div className='border-b-2 font-poppins' data-aos="fade-up" >
+    <div className=' font-poppins' data-aos="fade-up" >
 
     <header className="bg-white items-center flex">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 ">

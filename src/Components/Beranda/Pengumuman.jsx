@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { FaArrowRight  } from "react-icons/fa";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 const ArticleCard = ({ title, date, description, image }) => {
@@ -59,7 +60,7 @@ const ArticleSection = () => {
   ];
 
   return (
-    <div className="bg-gray-100 py-12" data-aos="fade-up" >
+    <div className="bg-white py-12 mt-12" data-aos="fade-up " >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -103,7 +104,10 @@ const ArticleSection = () => {
         {/* View All Button */}
         <div className="text-center mt-12" >
           <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
-            View All Announcements
+            <div className="flex items-center space-x-2">
+                        <span>View All Announcement</span>
+                        <FaArrowRight className="" />
+                      </div>
           </button>
         </div>
       </div>

@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="relative text-black p-4">
       {/* Background Image and Overlay */}
-      <div className="absolute inset-0 w-full h-full -z-10 border-t-2">
+      <div className="absolute inset-0 w-full h-full -z-10 ">
         {/* <img 
           src="/hmn4.jpg"
           alt="Footer Background"
