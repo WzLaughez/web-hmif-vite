@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        customBlue1: '#214478', // Add your custom color here
+        customBlue1: '#FFFBF0', // Add your custom color here
         customBlue2: '#5599ff', // Add your custom color here
       },
       fontFamily:{
