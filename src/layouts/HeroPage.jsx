@@ -15,7 +15,7 @@ const HeroPage = (props) => {
     <div className="relative min-h-[50vh] w-full font-poppins" data-aos="fade-down">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 w-full h-full">
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-blue-700/60 to-blue-800" />
+        <div className="absolute inset-0 bg-Sage" />
       </div>
 
       {/* Content */}

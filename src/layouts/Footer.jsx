@@ -3,7 +3,7 @@ import { MapPin, Mail, Phone, Facebook, Twitter, Instagram, Linkedin } from 'luc
 
 const Footer = () => {
   return (
-    <footer className="relative text-black p-4">
+    <footer className="relative text-black p-2">
       {/* Background Image and Overlay */}
       <div className="absolute inset-0 w-full h-full -z-10 ">
         {/* <img 
@@ -13,12 +13,12 @@ const Footer = () => {
         /> */}
         {/* Dark gradient overlay with custom colors */}
         <div className="absolute inset-0" style={{
-          background: `linear-gradient(to top, #5599ff,  white )`
+          background: `linear-gradient(to top, #ABBA72 ,#FFFBF0)`
         }} />
       </div>
 
       {/* Footer Content */}
-      <div className="relative max-w-6xl mx-auto px-4 py-8">
+      <div className="relative max-w-7xl mx-auto py-8 ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Left Section: Logo and Contact Info */}
           <div className="space-y-6">
@@ -36,7 +36,7 @@ const Footer = () => {
             {/* Contact Information */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5" style={{ color: '#5599ff' }} />
+                <MapPin className="h-5 w-5" style={{ color: '#F49069' }} />
                 <span className="text-sm">
                   Gedung Informatika UNTAN,<br />
                   Jl. Prof. Dr. H. Hadari Nawawi, Pontianak
@@ -44,17 +44,17 @@ const Footer = () => {
               </div>
               
               <div className="flex items-center gap-2">
-                <Mail className="h-5 w-5" style={{ color: '#5599ff' }} />
-                <a href="mailto:your.email@gmail.com" 
-                   className="text-sm transition-colors hover:text-[#5599ff]">
-                  your.email@gmail.com
+                <Mail className="h-5 w-5" style={{ color: '#F49069' }} />
+                <a href="mailto:bemfkumm@gmail.com" 
+                   className="text-sm transition-colors hover:text-Peach">
+                  bemfkumm@gmail.com
                 </a>
               </div>
               
               <div className="flex items-center gap-2">
-                <Phone className="h-5 w-5" style={{ color: '#5599ff' }} />
+                <Phone className="h-5 w-5" style={{ color: '#F49069' }} />
                 <a href="tel:+6281234567890" 
-                   className="text-sm transition-colors hover:text-[#5599ff]">
+                   className="text-sm transition-colors hover:text-Peach">
                   +62 812 3456 7890
                 </a>
               </div>
@@ -62,16 +62,16 @@ const Footer = () => {
 
             {/* Social Media Links */}
             <div className="flex gap-4">
-              <a href="#" className="transition-colors hover:text-[#5599ff]">
+              <a href="#" className="transition-colors hover:text-Peach">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="transition-colors hover:text-[#5599ff]">
+              <a href="#" className="transition-colors hover:text-Peach">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="transition-colors hover:text-[#5599ff]">
+              <a href="#" className="transition-colors hover:text-Peach">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="transition-colors hover:text-[#5599ff]">
+              <a href="#" className="transition-colors hover:text-Peach">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -89,8 +89,8 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-opacity-20" style={{ borderColor: '#214478' }}>
-          <p className="text-center text-sm" style={{ color: '#214478' }}>
+        <div className="mt-8 pt-8 border-t border-opacity-20" style={{ borderColor: '#F49069' }}>
+          <p className="text-center text-sm" style={{ color: '#000000' }}>
             © {new Date().getFullYear()} Copyright HMIF 2024
           </p>
         </div>

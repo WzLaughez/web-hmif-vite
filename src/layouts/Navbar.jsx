@@ -33,20 +33,20 @@ export default function NavBar() {
     'before:left-0',
     'before:h-0.5',
     'before:w-full',
-    'before:bg-black',
+    'before:bg-Peach/60',
     'before:scale-x-0',
     'before:origin-left',
     'before:transition-transform',
     'before:duration-500',
     'before:ease-in-out',
     'hover:before:scale-x-100',
-    isActive ? 'text-blue-600' : (scrolled ? 'text-black' : 'text-white')
+    isActive ? 'bg-Peach/60 px-2 border-r-4' : (scrolled ? 'text-black' : 'text-black')
   ].join(' ')
 
   return (
-    <header className={`fixed p-3 top-0 left-0 right-0 w-full font-poppins z-50 transition-all duration-300 
-      ${scrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
-      <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-3 lg:px-14">
+    <header className={`fixed p-3 top-0 left-0 right-0 w-full font-sans z-50 transition-all duration-300 
+      ${scrolled ? 'bg-Sage shadow-lg' : 'bg-transparent'}`}>
+      <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-3 lg:px-14 ">
         <div className="flex lg:flex-1">
           <NavLink to="/" className="-m-1.5 p-1.5">
             <div className='flex items-center space-x-4'>
@@ -55,8 +55,8 @@ export default function NavBar() {
                 src="/LogoHMIF-removebg-preview.png"
                 className="h-8 w-auto"
               />
-              <h1 className={`font-semibold ${scrolled ? 'text-black' : 'text-white'}`}>
-                HMIF UNTAN
+              <h1 className={`font-semibold ${scrolled ? 'text-black' : 'text-black'}`}>
+                BEM FK UM 2025
               </h1>
             </div>
           </NavLink>
@@ -75,6 +75,9 @@ export default function NavBar() {
         <div className="hidden lg:flex lg:gap-x-12">
           <NavLink to="/" className={linkClasses}>
             Home
+          </NavLink>
+          <NavLink to="/kementrian" className={linkClasses}>
+            Kementrian
           </NavLink>
           <NavLink to="/galeri" className={linkClasses}>
             Galeri

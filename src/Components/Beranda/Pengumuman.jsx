@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-
 import { FaArrowRight  } from "react-icons/fa";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import pengumumanData from '../../data/pengumuman.json'
+import { Link } from 'react-router';
 const ArticleCard = ({ title, date, description, image }) => {
 
   return (
@@ -27,7 +27,7 @@ const ArticleCard = ({ title, date, description, image }) => {
         
         <button
           
-          className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
+          className="text-Peach hover:text-Peach/60 font-medium transition-colors duration-200"
         >
           <a href="#">Read More </a>
         </button>
@@ -41,7 +41,7 @@ const ArticleSection = () => {
   const [articles] = useState(pengumumanData.pengumuman)
   
   return (
-    <div className="bg-white py-12 mt-12" data-aos="fade-up " >
+    <div className="py-12 mt-12" data-aos="fade-up " >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -76,7 +76,7 @@ const ArticleSection = () => {
                     title={article.title}
                     date={article.date}
                     description={article.content}
-                    image={article.image}
+                    image={article.imageUrl}
                     />
               </div>)
               })}
@@ -84,11 +84,13 @@ const ArticleSection = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12" >
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
+          <button className="bg-Peach px-8 py-3 rounded-lg hover:bg-Peach/60 transition-colors duration-200 font-medium">
+            <Link to ="/pengumuman">
             <div className="flex items-center space-x-2">
                         <span>View All Announcement</span>
                         <FaArrowRight className="" />
                       </div>
+            </Link>
           </button>
         </div>
       </div>
