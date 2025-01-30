@@ -19,8 +19,6 @@ const Home = () => {
     <VideoProfil/>
     <ArticleSection/>
     <GaleriHome images={images}/>
-    <Footer/>
-    
     </>
   )
 }

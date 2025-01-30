@@ -14,6 +14,8 @@ const GaleriHome = () => {
     { src: '/LogoHMIF-removebg-preview.png', title: 'Image 1' },
     { src: '/LogoHMIF-removebg-preview.png', title: 'Image 2' },
     { src: '/LogoHMIF-removebg-preview.png', title: 'Image 3' },
+    { src: '/LogoHMIF-removebg-preview.png', title: 'Image 3' },
+    { src: '/LogoHMIF-removebg-preview.png', title: 'Image 3' },
     // Add more images
   ];
   

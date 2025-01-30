@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { FaArrowRight  } from "react-icons/fa";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+
+import pengumumanData from '../../data/pengumuman.json'
 const ArticleCard = ({ title, date, description, image }) => {
 
   return (
@@ -35,30 +37,9 @@ const ArticleCard = ({ title, date, description, image }) => {
 };
 
 const ArticleSection = () => {
-  const articles = [
-    {
-      id: 1,
-      title: "New Research Lab Opening",
-      date: "January 21, 2025",
-      description: "We are excited to announce the opening of our new research laboratory. This state-of-the-art facility will house cutting-edge equipment and provide opportunities for advanced research in computer science and informatics. The lab will be available to both undergraduate and graduate students, promoting collaborative research and innovation. This development marks a significant milestone in our commitment to advancing technological education and research capabilities.",
-      image: "/api/placeholder/800/400"
-    },
-    {
-      id: 2,
-      title: "Upcoming Workshop Series",
-      date: "January 20, 2025",
-      description: "Join us for our upcoming workshop series on artificial intelligence and machine learning. These hands-on sessions will cover fundamental concepts, practical applications, and current trends in AI/ML. Perfect for students and professionals looking to expand their knowledge in these rapidly growing fields. Sessions will be led by industry experts and academic professionals. Limited seats available, register early to secure your spot.",
-      image: "/api/placeholder/800/400"
-    },
-    {
-      id: 3,
-      title: "Upcoming Workshop Series",
-      date: "January 20, 2025",
-      description: "Join us for our upcoming workshop series on artificial intelligence and machine learning. These hands-on sessions will cover fundamental concepts, practical applications, and current trends in AI/ML. Perfect for students and professionals looking to expand their knowledge in these rapidly growing fields. Sessions will be led by industry experts and academic professionals. Limited seats available, register early to secure your spot.",
-      image: "/api/placeholder/800/400"
-    }
-  ];
-
+  
+  const [articles] = useState(pengumumanData.pengumuman)
+  
   return (
     <div className="bg-white py-12 mt-12" data-aos="fade-up " >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,7 +75,7 @@ const ArticleSection = () => {
                     key={article.id}
                     title={article.title}
                     date={article.date}
-                    description={article.description}
+                    description={article.content}
                     image={article.image}
                     />
               </div>)

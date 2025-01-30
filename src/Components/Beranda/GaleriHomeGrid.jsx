@@ -2,7 +2,7 @@ import React from 'react';
 
 const GaleriHomeGrid = ({ images }) => {
     return (
-        <div className="grid grid-cols-3 gap-4 p-4">
+        <div className="flex  gap-4 p-4">
           {images.map((image, index) => (
             <div 
               key={index} 
