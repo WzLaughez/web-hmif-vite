@@ -56,7 +56,7 @@ export default function NavBar() {
                 className="h-8 w-auto"
               />
               <h1 className={`font-semibold ${scrolled ? 'text-black' : 'text-black'}`}>
-                BEM FK UM 2025
+                IAI JATIM
               </h1>
             </div>
           </NavLink>
