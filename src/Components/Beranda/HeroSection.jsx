@@ -14,15 +14,6 @@ const HeroSection = () => {
   return (
   <div className="relative min-h-[19vh] w-full font-poppins" data-aos ="fade-down">
     {/* Background Image with Overlay */}
-    <div className="absolute inset-0 w-full h-full">
-      <img 
-        src="src\assets\pelepasan.png"
-        alt="Hero Background"
-        className="w-full h-full object-cover"
-      />
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-SweetDaisy via-Sage/60 to-Sage" />
-    </div>
 
     {/* Content */}
     <div className="relative z-10 flex flex-col items-center justify-center min-h-[60vh] text-center px-4 sm:px-6 lg:px-8">

@@ -1,150 +1,188 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from '@headlessui/react'
-import {
-  Bars3Icon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Dialog, DialogPanel } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon, ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+
 
 export default function NavBar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeNestedDropdown, setActiveNestedDropdown] = useState(null);
   useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 20
-      setScrolled(isScrolled)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const linkClasses = ({ isActive }) => `
+    relative px-3 py-2 text-sm font-medium transition-all
+    before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:scale-x-0
+    before:origin-left before:transition-transform before:duration-500 before:ease-in-out
+    hover:before:scale-x-100 ${isActive ? 'text-Peach border-b-2 border-Peach' : 'text-gray-700 hover:text-Peach'}
+  `;
+
+  const dropdownMenus = {
+    'Tentang IAI Jatim': [
+      {
+        title: 'Organisasi IAI',
+        items: [
+          'Pengurus IAI Jatim',
+          'Badan IAI Jatim',
+          'Majelis IAI Jatim'
+        ]
+      },
+      {
+        title: 'Sejarah',
+        items: [
+          'Sejarah IAI Jatim',
+          'Daftar Ketua IAI Jatim'
+        ]
+      },
+      {
+        title: 'Peraturan IAI',
+        items: [
+          'AD-ART IAI Jatim',
+          'Kode Etik',
+          'Pedoman Hubungan'
+        ]
+      }
+    ],
+    'Anggota IAI': [
+      {
+        title: 'Informasi Keanggotaan',
+        items: [
+          'Dasar Keanggotaan',
+          'Ketua Anggota',
+          'Divisi Keanggotaan'
+        ]
+      }
+    ]
+  };
+
   
-  const linkClasses = ({ isActive }) => [
-    'relative',
-    'before:absolute',
-    'before:bottom-0',
-    'before:left-0',
-    'before:h-0.5',
-    'before:w-full',
-    'before:bg-Peach/60',
-    'before:scale-x-0',
-    'before:origin-left',
-    'before:transition-transform',
-    'before:duration-500',
-    'before:ease-in-out',
-    'hover:before:scale-x-100',
-    isActive ? 'bg-Peach/60 px-2 border-r-4' : (scrolled ? 'text-black' : 'text-black')
-  ].join(' ')
+  const DesktopDropdownMenu = ({ title, menuItems }) => (
+    <div 
+      className="relative group"
+      onMouseEnter={() => setActiveDropdown(title)}
+    >
+      <div 
+        
+        className={`flex items-center cursor-pointer hover:text-Peach ${activeDropdown === title ? 'text-Peach' : ''}`}
+        onClick={() => setActiveDropdown(activeDropdown === title ? null : title)}
+      >
+        {title}
+        <ChevronDownIcon className={`h-4 w-4 ml-1 transition-transform ${activeDropdown === title ? 'rotate-180' : ''}`} />
+      </div>
+      {activeDropdown === title && (
+        <div 
+          className="absolute top-full left-0 mt-2 w-64 bg-white shadow-lg rounded-lg p-4 z-50"
+          onMouseLeave={() => {
+            setActiveDropdown(null);
+            setActiveNestedDropdown(null);
+          }}
+        >
+          {menuItems.map((section, sectionIndex) => (
+            <div 
+              key={sectionIndex} 
+              className="relative mb-4 last:mb-0"
+              onMouseEnter={() => setActiveNestedDropdown(section.title)}
+            >
+              <div className="flex items-center justify-between font-semibold text-gray-900 mb-2">
+                {section.title}
+                <ChevronRightIcon className="h-4 w-4" />
+              </div>
+              {activeNestedDropdown === section.title && (
+                <div className="absolute top-0 left-full ml-2 w-64 bg-white shadow-lg rounded-lg p-4 z-50">
+                  {section.items.map((item, itemIndex) => (
+                    <NavLink
+                      key={itemIndex}
+                      to={`/${title.toLowerCase().replace(/ /g, '-')}/${section.title.toLowerCase().replace(/ /g, '-')}/${item.toLowerCase().replace(/ /g, '-')}`}
+                      className="block py-1 text-gray-700 hover:text-Peach hover:bg-gray-100 rounded px-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
   return (
-    <header className={`fixed p-3 top-0 left-0 right-0 w-full font-sans z-50 transition-all duration-300 
-      ${scrolled ? 'bg-Sage shadow-lg' : 'bg-transparent'}`}>
-      <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-3 lg:px-14 ">
-        <div className="flex lg:flex-1">
-          <NavLink to="/" className="-m-1.5 p-1.5">
-            <div className='flex items-center space-x-4'>
-              <img
-                alt="HMIF Logo"
-                src="/LogoHMIF-removebg-preview.png"
-                className="h-8 w-auto"
-              />
-              <h1 className={`font-semibold ${scrolled ? 'text-black' : 'text-black'}`}>
-                IAI JATIM
-              </h1>
-            </div>
-          </NavLink>
-        </div>
+    <header className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
+      <nav className="container mx-auto items-center justify-between p-4 lg:px-14">
+        {/* Logo */}
+        <div className=' justify-between'>
+        <div className='flex justify-between p-4'>
 
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <Bars3Icon aria-hidden="true" className="size-6" />
-          </button>
-        </div>
+        <NavLink to="/" className="flex items-center space-x-4">
+          <img src="/LogoHMIF-removebg-preview.png" alt="IAI JATIM Logo" className="h-8 w-auto" />
+          <h1 className={`font-semibold ${scrolled ? 'text-gray-900' : 'text-gray-800'}`}>IAI JATIM</h1>
+        </NavLink>
 
-        <div className="hidden lg:flex lg:gap-x-12">
-          <NavLink to="/" className={linkClasses}>
-            Home
-          </NavLink>
-          <NavLink to="/kementrian" className={linkClasses}>
-            Kementrian
-          </NavLink>
-          <NavLink to="/galeri" className={linkClasses}>
-            Galeri
-          </NavLink>
-          <NavLink to="/about" className={linkClasses}>
-            About
-          </NavLink>
-          <NavLink to="/pengumuman" className={linkClasses}>
-            Pengumuman
-          </NavLink>
+        {/* Desktop Navigation */}
+        <div>
+        {/* Mobile Menu Button */}
+        <button className="lg:hidden p-2 text-gray-700" onClick={() => setMobileMenuOpen(true)}>
+          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+        </button>
         </div>
-        
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-          <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              <NavLink to="/" className="-m-1.5 p-1.5">
-                <img
-                  alt="HMIF Logo"
-                  src="/LogoHMIF-removebg-preview.png"
-                  className="h-8 w-auto"
-                />
+        </div>
+        <div>
+
+        <div className="hidden lg:flex justify-between  items-center text-center">
+            {['Beranda', 'Berita dan Kegiatan'].map((item, index) => (
+              <NavLink key={index} to={`/${item.toLowerCase().replace(/ /g, '-')}`} className={linkClasses}>
+                {item}
               </NavLink>
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              >
-                <XMarkIcon aria-hidden="true" className="size-6" />
+            ))}
+            
+            {/* Dropdown Menus */}
+            {Object.keys(dropdownMenus).map((title, index) => (
+              <DesktopDropdownMenu 
+                className={linkClasses}
+                key={index} 
+                title={title} 
+                menuItems={dropdownMenus[title]} 
+              />
+            ))}
+
+            {['Profesi Arsitek', 'Layanan Arsitek', 'Media IAI Jatim', 'Sayembara dan Penghargaan', 'Kemitraan', 'Kontak'].map((item, index) => (
+              <NavLink key={index} to={`/${item.toLowerCase().replace(/ /g, '-')}`} className={linkClasses}>
+                {item}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+        </div>
+
+
+        {/* Mobile Menu */}
+        <Dialog open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} className="lg:hidden">
+          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-screen max-w-sm bg-white p-6 shadow-xl">
+            <div className="flex items-center justify-between">
+              <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>
+                <img src="/LogoHMIF-removebg-preview.png" alt="IAI JATIM Logo" className="h-8 w-auto" />
+              </NavLink>
+              <button className="p-2 text-gray-700" onClick={() => setMobileMenuOpen(false)}>
+                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-                  <NavLink
-                    to="/"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    Home
-                  </NavLink>
-                  <NavLink
-                    to="/galeri"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    Galeri
-                  </NavLink>
-                  <NavLink
-                    to="/about"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    About
-                  </NavLink>
-                  <NavLink
-                    to="/pengumuman"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    Pengumuman
-                  </NavLink>
-                </div>
-              </div>
+            <div className="mt-6 space-y-4">
+              {['Beranda', 'Galeri', 'About', 'Pengumuman'].map((item, index) => (
+                <NavLink key={index} to={`/${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-2 text-gray-900 rounded-lg hover:bg-gray-100">
+                  {item}
+                </NavLink>
+              ))}
             </div>
           </DialogPanel>
         </Dialog>
-        </nav>
-      </header>
-  )
+      </nav>
+    </header>
+  );
 }
