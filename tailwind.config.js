@@ -13,7 +13,7 @@ export default {
       },
       fontFamily:{
         // poppins:['Poppins'],
-        sans: ['Roboto', 'Arial', 'sans-serif'], // Primary font
+        sans: ['Roboto', 'sans-serif'], // Primary font
         serif: ['Merriweather', 'Georgia', 'serif'], // Secondary font
         mono: ['Courier New', 'monospace'], // Monospace font
       }

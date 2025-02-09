@@ -10,8 +10,7 @@ function Pengumuman() {
   return (
     <>
       <HeroPage teks="Pengumuman"/>
-      <div className="container mx-auto px-4 py-16 mt-16">
-      <h1 className="text-4xl font-bold mb-6 text-center">Pengumuman</h1>
+      <div className="container mx-auto px-4 py-16 mt-16 max-w-6xl">
       <div className="flex flex-wrap justify-center gap-6">
   {pengumuman.map((item) => (
     <Link 
@@ -22,12 +21,18 @@ function Pengumuman() {
       <img 
         src={item.imageUrl} 
         alt={item.title} 
-        className="w-full h-48 object-cover"
+        className="w-full h-36 object-cover"
       />
-      <div className="p-4">
-        <h2 className="text-xl font-semibold">{item.title}</h2>
-        <p className="text-gray-500 text-sm mb-2">{item.date}</p>
-        <p className="text-gray-700">{item.description}</p>
+      <div className="p-5 flex flex-col flex-grow">
+        <div className="text-gray-500 text-sm mb-2">{item.date}</div>
+        <h3 className="text-xl font-semibold text-gray-800 mb-3">{item.title}</h3>
+        
+        <p className="text-gray-600 mb-4 flex-grow">
+          {`${item.content.substring(0, 100)}...`}
+        </p>
+        <a className="text-Peach hover:text-Peach/60 font-medium transition-colors duration-200 mt-auto">
+          <a href={`/pengumuman/${item.id}`}>Read More</a>
+        </a>
       </div>
     </Link>
   ))}

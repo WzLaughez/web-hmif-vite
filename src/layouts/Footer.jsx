@@ -18,7 +18,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Content */}
-      <div className="relative max-w-7xl mx-auto py-8 ">
+      <div className="relative max-w-6xl mx-auto py-8 ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Left Section: Logo and Contact Info */}
           <div className="space-y-6">
@@ -39,7 +39,7 @@ const Footer = () => {
                 <MapPin className="h-5 w-5" style={{ color: '#F49069' }} />
                 <span className="text-sm">
                   Gedung Informatika UNTAN,<br />
-                  Jl. Prof. Dr. H. Hadari Nawawi, Pontianak
+                  Jalan Semarang 5, Malang 65145
                 </span>
               </div>
               

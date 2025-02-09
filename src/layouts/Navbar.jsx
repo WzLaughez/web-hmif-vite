@@ -28,25 +28,43 @@ export default function NavBar() {
   
   const linkClasses = ({ isActive }) => [
     'relative',
+    'px-2',
+    'py-1',
+    'transition-all',
+    'duration-300',
     'before:absolute',
     'before:bottom-0',
     'before:left-0',
-    'before:h-0.5',
+    'before:h-1',
     'before:w-full',
-    'before:bg-Peach/60',
+    'before:origin-center',
     'before:scale-x-0',
-    'before:origin-left',
+    'before:rounded-full',
+    'before:bg-Peach',
     'before:transition-transform',
-    'before:duration-500',
-    'before:ease-in-out',
+    'before:duration-300',
+    'before:ease-out',
     'hover:before:scale-x-100',
-    isActive ? 'bg-Peach/60 px-2 border-r-4' : (scrolled ? 'text-black' : 'text-black')
+    'after:absolute',
+    'after:bottom-0',
+    'after:left-0',
+    'after:h-full',
+    'after:w-full',
+    'after:origin-bottom',
+    'after:scale-y-0',
+    'after:bg-Peach/20',
+    'after:transition-transform',
+    'after:duration-300',
+    'after:ease-out',
+    'hover:after:scale-y-100',
+    'hover:text-black',
+    isActive ? 'text-black border-b-2 border-Peach' : (scrolled ? 'text-black' : 'text-black')
   ].join(' ')
 
   return (
     <header className={`fixed p-3 top-0 left-0 right-0 w-full font-sans z-50 transition-all duration-300 
       ${scrolled ? 'bg-Sage shadow-lg' : 'bg-transparent'}`}>
-      <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-3 lg:px-14 ">
+      <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-3 lg:px-14 max-w-7xl">
         <div className="flex lg:flex-1">
           <NavLink to="/" className="-m-1.5 p-1.5">
             <div className='flex items-center space-x-4'>
@@ -144,7 +162,7 @@ export default function NavBar() {
             </div>
           </DialogPanel>
         </Dialog>
-        </nav>
-      </header>
+      </nav>
+    </header>
   )
 }

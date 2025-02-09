@@ -27,12 +27,12 @@ const Kabinet = () => {
     {/* Content */}
       <VideoProfil/>
       <FotoKetua/>
-    <div className="relative z-10 flex flex-col items-center justify-center min-h-[15vh] text-center px-4 sm:px-6 lg:px-8 ">
+    <div className="relative z-10 flex flex-col items-center justify-center min-h-[15vh] text-center px-2 sm:px-6 lg:px-8 bg-Sage ">
         <div className='border-b-4'>
-                <h1 className="text-2xl sm:text-4xl md:text-3xl font-bold mb-2 max-w-4xl ">
+                <h1 className="text-2xl sm:text-4xl md:text-3xl font-bold font-serif mb-2 max-w-4xl ">
                 <Typewriter
                     words={[
-                        'Kabinet Arunika Nawasena ',
+                        'KABINET ARUNIKA NAWASENA ',
                         ]} // Enable looping of the words
                         cursor={false} // Show a blinking cursor
                         cursorStyle="_"
