@@ -12,6 +12,7 @@ import 'aos/dist/aos.css';
 import ScrollToTopButton from './layouts/ScrollToTopButton'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import PengumumanDetail from './Components/Pengumuman/PengumumanDetail'
+import Kepengurusan from './Components/Kepengurusan'
 AOS.init({
   once: false,
 });
@@ -31,6 +32,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home key={location.pathname} />} />
+      <Route path="/kementrian" element={<Kepengurusan key={location.pathname} />} />
       <Route path="/galeri" element={<Galeri key={location.pathname} />} />
       <Route path="/about" element={<About key={location.pathname} />} />
       <Route path="/pengumuman" element={<Pengumuman key={location.pathname} />} />
