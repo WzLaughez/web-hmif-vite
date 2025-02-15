@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         SweetDaisy: '#FFFBF0', // Add your custom color here
-        Sage: '#ABBA72', // Add your custom color here
+        Sage: '#BFDAA4', // Add your custom color here
         Peach: '#F49069', // Add your custom color here
       },
       fontFamily:{

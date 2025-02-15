@@ -13,7 +13,7 @@ const Footer = () => {
         /> */}
         {/* Dark gradient overlay with custom colors */}
         <div className="absolute inset-0" style={{
-          background: `linear-gradient(to top, #ABBA72 ,#FFFBF0)`
+          background: `linear-gradient(to top, #BFDAA4 ,#FFFBF0)`
         }} />
       </div>
 

@@ -25,14 +25,14 @@ function Pengumuman() {
       />
       <div className="p-5 flex flex-col flex-grow">
         <div className="text-gray-500 text-sm mb-2">{item.date}</div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-3">{item.title}</h3>
+        <div className="flex flex-col">
+
+        <h3 className="text-xl font-semibold text-center text-gray-800 mb-3">{item.title}</h3>
         
         <p className="text-gray-600 mb-4 flex-grow">
           {`${item.content.substring(0, 100)}...`}
         </p>
-        <a className="text-Peach hover:text-Peach/60 font-medium transition-colors duration-200 mt-auto">
-          <a href={`/pengumuman/${item.id}`}>Read More</a>
-        </a>
+        </div>
       </div>
     </Link>
   ))}
