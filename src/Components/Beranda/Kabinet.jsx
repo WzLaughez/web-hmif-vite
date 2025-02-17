@@ -40,6 +40,15 @@ const Kabinet = () => {
                         />
                 </h1>
         </div>
+        <div className="relative rounded-lg overflow-hidden  p-8" data-aos="fade-up">
+              <img 
+                src="src/assets/pelepasan.png"
+                alt="Kabinet Background"
+                className="w-full h-[60vh] object-cover object-center transform hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            </div>
+                
     </div>
   </div>
   )
