@@ -70,7 +70,7 @@ export default function NavBar() {
             <div className='flex items-center space-x-4'>
               <img
                 alt="HMIF Logo"
-                src="/LogoHMIF-removebg-preview.png"
+                src="/Screenshot 2025-02-17 195834.png"
                 className="h-8 w-auto"
               />
               <h1 className={`font-semibold ${scrolled ? 'text-black' : 'text-black'}`}>

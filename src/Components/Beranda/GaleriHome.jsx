@@ -11,11 +11,11 @@ const GaleriHome = () => {
     });
   }, []);
   const images = [
-    { src: '/LogoHMIF-removebg-preview.png', title: 'Image 1' },
-    { src: '/LogoHMIF-removebg-preview.png', title: 'Image 2' },
-    { src: '/LogoHMIF-removebg-preview.png', title: 'Image 3' },
-    { src: '/LogoHMIF-removebg-preview.png', title: 'Image 3' },
-    { src: '/LogoHMIF-removebg-preview.png', title: 'Image 3' },
+    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 1' },
+    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 2' },
+    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
+    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
+    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
     // Add more images
   ];
   

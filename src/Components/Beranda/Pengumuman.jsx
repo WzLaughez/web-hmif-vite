@@ -5,7 +5,7 @@ import 'aos/dist/aos.css';
 import pengumumanData from '../../data/pengumuman.json';
 import { Link } from 'react-router';
 
-const ArticleCard = ({ title, date, description, image }) => {
+const ArticleCard = ({ id,title, date, description, image }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
       <div className="aspect-w-16 aspect-h-9 relative">
@@ -25,7 +25,7 @@ const ArticleCard = ({ title, date, description, image }) => {
         </p>
         
         <button className="text-Peach hover:text-Peach/60 font-medium transition-colors duration-200 mt-auto">
-          <a href="#">Read More</a>
+          <Link to={`/pengumuman/${id}`} >Read More</Link>
         </button>
       </div>
     </div>
@@ -57,6 +57,7 @@ const ArticleSection = () => {
                 className="h-full"
               >
                 <ArticleCard 
+                  id={article.id}
                   title={article.title}
                   date={article.date}
                   description={article.content}

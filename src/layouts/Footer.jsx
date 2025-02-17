@@ -27,7 +27,7 @@ const Footer = () => {
               <h2 className="text-2xl font-bold">
               <img
               alt=""
-              src="\LogoHMIF-removebg-preview.png"
+              src="/Screenshot 2025-02-17 195834.png"
               className="h-20 w-auto"
               />
               </h2>

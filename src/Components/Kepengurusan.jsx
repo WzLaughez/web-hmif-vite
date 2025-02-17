@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { VscCode } from "react-icons/vsc";
 const Kepengurusan = () => {
   const pengurus = {
-    ketua: { nama: 'Nama Ketua', foto: null }, // foto: null if no image
     sekretaris: { nama: 'Nama Sekretaris', foto: null },
+    ketua: { nama: 'Nama Ketua', foto: null }, // foto: null if no image
     bendahara: { nama: 'Nama Bendahara', foto: null },
   };
   const menteri = {
