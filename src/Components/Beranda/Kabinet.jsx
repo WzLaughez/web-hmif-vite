@@ -42,7 +42,7 @@ const Kabinet = () => {
         </div>
         <div className="relative rounded-lg overflow-hidden  p-8" data-aos="fade-up">
               <img 
-                src="src/assets/pelepasan.png"
+                src="/pelepasan.png"
                 alt="Kabinet Background"
                 className="w-full h-[60vh] object-cover object-center transform hover:scale-105 transition-transform duration-500"
               />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaArrowRight } from "react-icons/fa";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import pengumumanData from '../../data/pengumuman.json';
+import pengumumanData from '/pengumuman.json';
 import { Link } from 'react-router';
 
 const ArticleCard = ({ id,title, date, description, image }) => {
