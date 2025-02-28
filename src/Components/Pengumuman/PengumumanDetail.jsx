@@ -10,22 +10,22 @@ function PengumumanDetail() {
       id: "1",
       title: "Pendaftaran Anggota Baru 2024",
       date: "15 Januari 2024",
-      imageUrl: "/background.png",
-      content: "lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      imageUrl: "/background_gaya.png",
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
       id: "2",
       title: "Workshop Teknologi Terbaru",
       date: "20 Februari 2024",
-      imageUrl: "/background_gaya.png",
-      content: "lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      imageUrl: "/background.png",
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
       id: "3",
       title: "Hackathon HMIF 2024",
       date: "10 Maret 2024",
       imageUrl: "/Logo_Hijau.png",
-      content: "lorem200 ipsum dolor sit amet, consectetur adipiscing elit."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     }
   ];
 

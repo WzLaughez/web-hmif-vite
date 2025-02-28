@@ -10,21 +10,21 @@ function Pengumuman() {
       title: "Pendaftaran Anggota Baru 2024",
       date: "15 Januari 2024",
       imageUrl: "/background_gaya.png",
-      content: "Himpunan Mahasiswa Informatika (HMIF) UNTAN membuka pendaftaran anggota baru untuk periode 2024-2025. Terbuka untuk mahasiswa aktif Teknik Informatika yang berminat mengembangkan kemampuan dan berorganisasi."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
       id: "2",
       title: "Workshop Teknologi Terbaru",
       date: "20 Februari 2024",
       imageUrl: "/background.png",
-      content: "Ikuti workshop teknologi terbaru yang diselenggarakan oleh HMIF UNTAN untuk mengembangkan wawasan dan keterampilan dalam bidang teknologi."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
       id: "3",
       title: "Hackathon HMIF 2024",
       date: "10 Maret 2024",
       imageUrl: "/Logo_Hijau.png",
-      content: "Bergabunglah dalam Hackathon HMIF 2024 dan tunjukkan kreativitas serta kemampuan coding kamu dalam membangun solusi inovatif."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     }
   ];
   
