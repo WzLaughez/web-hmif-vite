@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import Footer from './layouts/Footer'
 import Navbar from './layouts/Navbar'
 import Home from './Components/Home'
-import About from './Components/About'
+import Plan from './Components/Plan'
 import Galeri from './Components/Galeri'
 import Pengumuman from './Components/Pengumuman'
 import AOS from 'aos';
@@ -12,8 +12,7 @@ import 'aos/dist/aos.css';
 import ScrollToTopButton from './layouts/ScrollToTopButton'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import PengumumanDetail from './Components/Pengumuman/PengumumanDetail'
-import Kepengurusan from './Components/Kepengurusan'
-
+import About from './Components/About'
 AOS.init({
   once: false,
 });
@@ -33,9 +32,9 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home key={location.pathname} />} />
-      <Route path="/kepengurusan" element={<Kepengurusan key={location.pathname} />} />
-      <Route path="/galeri" element={<Galeri key={location.pathname} />} />
       <Route path="/about" element={<About key={location.pathname} />} />
+      <Route path="/galeri" element={<Galeri key={location.pathname} />} />
+      <Route path="/plan" element={<Plan key={location.pathname} />} />
       <Route path="/pengumuman" element={<Pengumuman key={location.pathname} />} />
       <Route path="/pengumuman/:id" element={<PengumumanDetail key={location.pathname} />} />
     </Routes>

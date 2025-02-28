@@ -27,12 +27,7 @@ const VideoProfil = () => {
 
     <div className=' font-poppins' data-aos="fade-up" >
 
-    <header className="bg-white items-center flex">
-          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 ">
-            <h1 className="border-customBlue2 py-1 border-b-2 text-3xl font-semibold tracking-tight text-gray-900">Video Profil</h1>
-          </div>
-    </header>
-    <div className=" py-10 " >
+    <div className="" >
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-md overflow-hidden" >
             <YouTubeEmbed videoId={videoId} />

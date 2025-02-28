@@ -1,35 +1,30 @@
 import React, { useState } from 'react';
-
-import { FaArrowRight  } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Link } from 'react-router';
 
-import pengumumanData from '../../data/pengumuman.json'
-const ArticleCard = ({ title, date, description, image }) => {
-
+const ArticleCard = ({ id,title, date, description, image }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      {/* Image */}
-      <img 
-        src={image} 
-        alt={title} 
-        className="w-full h-48 object-cover"
-      />
+    <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
+      <div className="aspect-w-16 aspect-h-9 relative">
+        <img 
+          src={image} 
+          alt={title} 
+          className="w-full h-48 object-cover"
+        />
+      </div>
       
-      {/* Content */}
-      <div className="p-5">
+      <div className="p-5 flex flex-col flex-grow">
         <div className="text-gray-500 text-sm mb-2">{date}</div>
         <h3 className="text-xl font-semibold text-gray-800 mb-3">{title}</h3>
         
-        <p className="text-gray-600 mb-4">
+        <p className="text-gray-600 mb-4 flex-grow">
           {`${description.substring(0, 150)}...`}
         </p>
         
-        <button
-          
-          className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
-        >
-          <a href="#">Read More </a>
+        <button className="text-Peach hover:text-Peach/60 font-medium transition-colors duration-200 mt-auto">
+          <Link to={`/pengumuman/${id}`} >Read More</Link>
         </button>
       </div>
     </div>
@@ -37,13 +32,34 @@ const ArticleCard = ({ title, date, description, image }) => {
 };
 
 const ArticleSection = () => {
-  
-  const [articles] = useState(pengumumanData.pengumuman)
+  // const [articles] = useState(pengumumanData.pengumuman);
+  const articles = [
+    {
+      id: "1",
+      title: "Pendaftaran Anggota Baru 2024",
+      date: "15 Januari 2024",
+      imageUrl: "/background.png",
+      content: "lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      id: "2",
+      title: "Workshop Teknologi Terbaru",
+      date: "20 Februari 2024",
+      imageUrl: "/background_gaya.png",
+      content: "lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      id: "3",
+      title: "Hackathon HMIF 2024",
+      date: "10 Maret 2024",
+      imageUrl: "/Logo_Hijau.png",
+      content: "lorem200 ipsum dolor sit amet, consectetur adipiscing elit."
+    }
+  ];
   
   return (
-    <div className="bg-white py-12 mt-12" data-aos="fade-up " >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <div className="py-12 mt-12" data-aos="fade-up">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Latest Announcements</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -51,44 +67,37 @@ const ArticleSection = () => {
           </p>
         </div>
 
-        {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article, index) => 
-              {
-                let animation = ""
-                if (index % 3 === 0) {
-                animation = "fade-right" // Left
-                } else if (index % 3 === 1) {
-                animation = "fade-down"; // Center
-                } else {
-                
-                animation = "fade-right"; // Right
-                }
+          {articles.map((article, index) => {
+            const animation = index % 3 === 1 ? "fade-down" : "fade-right";
             
             return (
-                <div
+              <div
                 key={article.id}
                 data-aos={animation}
                 data-aos-duration="10000"
-                >
-                    <ArticleCard 
-                    key={article.id}
-                    title={article.title}
-                    date={article.date}
-                    description={article.content}
-                    image={article.image}
-                    />
-              </div>)
-              })}
+                className="h-full"
+              >
+                <ArticleCard 
+                  id={article.id}
+                  title={article.title}
+                  date={article.date}
+                  description={article.content}
+                  image={article.imageUrl}
+                />
+              </div>
+            );
+          })}
         </div>
 
-        {/* View All Button */}
-        <div className="text-center mt-12" >
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
-            <div className="flex items-center space-x-2">
-                        <span>View All Announcement</span>
-                        <FaArrowRight className="" />
-                      </div>
+        <div className="text-center mt-12">
+          <button className="bg-Peach px-8 py-3 rounded-lg hover:bg-Peach/60 transition-colors duration-200 font-medium">
+            <Link to="/pengumuman">
+              <div className="flex items-center space-x-2">
+                <span>View All Announcement</span>
+                <FaArrowRight />
+              </div>
+            </Link>
           </button>
         </div>
       </div>
