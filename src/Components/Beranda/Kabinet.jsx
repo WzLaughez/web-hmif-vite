@@ -50,7 +50,7 @@ const Kabinet = () => {
           </Link>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 md:gap-6 mt-6 md:mt-8 px-4 md:px-8" data-aos="fade-up">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6 mt-6 mb-6 md:mt-8 px-4 md:px-8" data-aos="fade-up">
       <Link to="/about" className="w-full md:w-1/2 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
         <div className="flex flex-col sm:flex-row items-center p-4">
           <img 
