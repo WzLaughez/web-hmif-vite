@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaUser, FaUsers, FaBriefcase } from 'react-icons/fa'; // Import icons
-import HeroPage from '../layouts/HeroPage';
 import {  FaHandHoldingUsd, FaBalanceScale, FaFlask, FaBullhorn } from 'react-icons/fa';
 import { motion, AnimatePresence } from "framer-motion";
 import { VscCode } from "react-icons/vsc";
@@ -117,7 +116,6 @@ const Kepengurusan = () => {
 
   return (
     <>
-      <HeroPage teks="Kepengurusan Kementrian"/>
       <div className="container mx-auto md:p-8 max-w-6xl">
         {/* Pengurus Inti - Responsive Grid */}
         <motion.div 

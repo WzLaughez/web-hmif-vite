@@ -11,11 +11,11 @@ const GaleriHome = () => {
     });
   }, []);
   const images = [
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 1' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 2' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
+    { src: '/background_gaya.png', title: 'Image 1' },
+    { src: '/background.png', title: 'Image 2' },
+    { src: '/ketua.png', title: 'Image 3' },
+    { src: '/Logo_Hijau.png', title: 'Image 3' },
+    { src: '/Logo_Kabinet.png', title: 'Image 3' },
     // Add more images
   ];
   
@@ -27,7 +27,7 @@ const GaleriHome = () => {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Galeri</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-          Kumpulan dokumentasi kegiatan yang diselenggarakan oleh Himpunan Mahasiswa Informatika UNTAN
+          Kumpulan dokumentasi kegiatan yang diselenggarakan oleh Badan Eksekutif Mahasiswa Fakultas Kedokteran
           </p>
         </div>
         </div>

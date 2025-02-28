@@ -4,11 +4,11 @@ import HeroPage from '../layouts/HeroPage';
 import { Link } from 'react-router'
 const Galeri = () => {
   const images = [
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 1' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 2' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
-    { src: '/Screenshot 2025-02-17 195834.png', title: 'Image 3' },
+    { src: '/background_gaya.png', title: 'Image 1' },
+    { src: '/background.png', title: 'Image 2' },
+    { src: '/ketua.png', title: 'Image 3' },
+    { src: '/Logo_Hijau.png', title: 'Image 3' },
+    { src: '/Logo_Kabinet.png', title: 'Image 3' },
     // Add more images
   ];
   return (
