@@ -47,9 +47,9 @@ const Footer = () => {
               
               <div className="flex items-center gap-2">
                 <Mail className="h-5 w-5" style={{ color: '#F49069' }} />
-                <a href="mailto:bemfkumm@gmail.com" 
+                <a href="mailto:bemfkum@gmail.com" 
                    className="text-sm transition-colors hover:text-Peach">
-                  bemfkumm@gmail.com
+                  bemfkum@gmail.com
                 </a>
               </div>
               
@@ -57,7 +57,7 @@ const Footer = () => {
                 <Phone className="h-5 w-5" style={{ color: '#F49069' }} />
                 <a href="tel:+6281234567890" 
                    className="text-sm transition-colors hover:text-Peach">
-                  +62 812 3456 7890
+                  +6281216016334
                 </a>
               </div>
             </div>
@@ -70,7 +70,7 @@ const Footer = () => {
               <a href="#" className="transition-colors hover:text-Peach">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="transition-colors hover:text-Peach">
+              <a href="https://www.instagram.com/bemfkum/?utm_source=ig_web_button_share_sheet" className="transition-colors hover:text-Peach">
                 <Instagram className="h-5 w-5" />
               </a>
               <a href="#" className="transition-colors hover:text-Peach">
