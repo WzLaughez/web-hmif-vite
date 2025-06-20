@@ -12,7 +12,10 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@supabase/supabase-js": "^2.50.0",
     "aos": "^3.0.0-beta.6",
+    "axios": "^1.8.1",
+    "firebase": "^11.9.1",
     "framer-motion": "^12.4.3",
     "lucide-react": "^0.473.0",
     "react": "^18.3.1",

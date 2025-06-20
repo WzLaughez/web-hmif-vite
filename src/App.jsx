@@ -44,7 +44,6 @@ function App() {
 
   return (
     <>
-    <Router>
       <div className="App">
       <ScrollToTop/>
         <Navbar/>
@@ -52,7 +51,6 @@ function App() {
         <Footer/>
         <ScrollToTopButton/>
       </div>
-    </Router>
     </>
   )
 }

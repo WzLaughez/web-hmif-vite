@@ -1,32 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import HeroPage from '../layouts/HeroPage'
-
+import supabase from './admin/utils/supabaseClient'
 import { Link } from 'react-router'
-function Pengumuman() {
-  
-  const pengumuman = [
-    {
-      id: "1",
-      title: "Pendaftaran Anggota Baru 2024",
-      date: "15 Januari 2024",
-      imageUrl: "/background_gaya.png",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      id: "2",
-      title: "Workshop Teknologi Terbaru",
-      date: "20 Februari 2024",
-      imageUrl: "/background.png",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      id: "3",
-      title: "Hackathon HMIF 2024",
-      date: "10 Maret 2024",
-      imageUrl: "/Logo_Hijau.png",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+const Pengumuman = () => {
+  const [pengumuman, setPengumuman] = useState([])
+  useEffect(() => {
+    const fetchPengumuman = async () => {
+      const { data, error } = await supabase
+        .from('pengumuman')
+        .select('*')
+      if (error) console.error(error)
+      else {
+        console.log(data)
+        setPengumuman(data)}
     }
-  ];
+
+    fetchPengumuman()
+  }, [])
   
   return (
     <>
@@ -40,7 +30,7 @@ function Pengumuman() {
       className="w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105"
     >
       <img 
-        src={item.imageUrl} 
+        src={item.image_url} 
         alt={item.title} 
         className="w-full h-36 object-cover"
       />

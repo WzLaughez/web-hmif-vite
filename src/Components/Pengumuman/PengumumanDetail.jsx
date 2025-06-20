@@ -1,45 +1,49 @@
-import React from 'react'
-import { useParams, Link } from 'react-router-dom'
-import TitlePengumuman from './TitlePengumuman'
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import TitlePengumuman from './TitlePengumuman';
+
+import supabase from '../admin/utils/supabaseClient';
 
 function PengumumanDetail() {
-  const { id } = useParams(); // Get the id from the URL params
+  const { id } = useParams(); // ID dari URL
+  const [pengumuman, setPengumuman] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const pengumuman = [
-    {
-      id: "1",
-      title: "Pendaftaran Anggota Baru 2024",
-      date: "15 Januari 2024",
-      imageUrl: "/background_gaya.png",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      id: "2",
-      title: "Workshop Teknologi Terbaru",
-      date: "20 Februari 2024",
-      imageUrl: "/background.png",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      id: "3",
-      title: "Hackathon HMIF 2024",
-      date: "10 Maret 2024",
-      imageUrl: "/Logo_Hijau.png",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    }
-  ];
+  useEffect(() => {
+    const fetchPengumuman = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('pengumuman')
+        .select('*')
+        .eq('id', id)
+        .single();
 
-  const selectedPengumuman = pengumuman.find(item => item.id === id);
+      if (error) {
+        setError('Pengumuman tidak ditemukan.');
+      } else {
+        setPengumuman(data);
+      }
 
-  if (!selectedPengumuman) {
-    return <p className="text-center text-gray-500 mt-12">Pengumuman tidak ditemukan.</p>;
+      setLoading(false);
+    };
+
+    fetchPengumuman();
+  }, [id]);
+
+  if (loading) {
+    return <p className="text-center text-gray-500 mt-12">Memuat...</p>;
+  }
+
+  if (error || !pengumuman) {
+    return <p className="text-center text-red-500 mt-12">{error || 'Pengumuman tidak ditemukan.'}</p>;
   }
 
   return (
     <>
       <TitlePengumuman />
       <div className="container mx-auto px-4 mt-12">
-        <div className="max-w-4xl mx-auto items-center ">
+        <div className="max-w-4xl mx-auto">
           <div className="mb-6">
             <Link 
               to="/pengumuman" 
@@ -49,14 +53,16 @@ function PengumumanDetail() {
             </Link>
           </div>
           <img 
-            src={selectedPengumuman.imageUrl} 
-            alt={selectedPengumuman.title} 
-            className="w-max h-96 object-cover rounded-lg mb-6 items-center"
+            src={pengumuman.image_url} 
+            alt={pengumuman.title} 
+            className="w-full h-96 object-cover rounded-lg mb-6"
           />
-          <h1 className="text-4xl font-bold mb-4">{selectedPengumuman.title}</h1>
-          <p className="text-gray-500 mb-4">{selectedPengumuman.date}</p>
+          <h1 className="text-4xl font-bold mb-4">{pengumuman.title}</h1>
+          <p className="text-gray-500 mb-4">{new Date(pengumuman.date).toLocaleDateString('id-ID', {
+            day: 'numeric', month: 'long', year: 'numeric'
+          })}</p>
           <div className="prose lg:prose-xl">
-            <p>{selectedPengumuman.content}</p>
+            <p>{pengumuman.content}</p>
           </div>
         </div>
       </div>
