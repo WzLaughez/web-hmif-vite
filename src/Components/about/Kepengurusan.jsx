@@ -9,7 +9,7 @@ const Kepengurusan = () => {
   const [loading, setLoading] = useState(true);
     useEffect(() => {
     const fetchPengurus = async () => {
-      const { data, error } = await supabase.from('pengurus_utama').select('*');
+      const { data, error } = await supabase.from('pengurus_utama').select('*').order('jabatan', { ascending: true });
       if (error) {
         console.error(error);
       } else {
@@ -82,12 +82,13 @@ const Kepengurusan = () => {
               transition={{ delay: index * 0.1 }}
             >
               <div key={index} className="bg-white  rounded-lg shadow-md p-4 w-48 text-center">
-      {person.foto ? (
-        <img src={person.foto} alt={person.nama} className="rounded-full h-32 w-32 mx-auto mb-2 object-cover" />
+      {person.foto_url ? (
+        <img src={person.foto_url} alt={person.nama} className="rounded-full h-32 w-32 mx-auto mb-2 object-cover" />
       ) : (
         <FaUser className="h-32 w-32 mx-auto mb-2 text-gray-500" /> // Icon if no photo
       )}
-      <h3 className="font-semibold">{person.nama}</h3>
+      <h3 className="font-bold">{person.jabatan}</h3>
+      <p>{person.nama}</p>
     </div>
     
         </motion.div>

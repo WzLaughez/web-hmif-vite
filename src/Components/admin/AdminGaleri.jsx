@@ -6,7 +6,7 @@ import GaleriFormModal from './modals/GaleriFormModal';
 import { Link } from 'react-router-dom';
 import {
   Search, PlusCircle, Edit, Trash2, AlertCircle, X,
-  ChevronLeft, ChevronRight, Users, FileText, Menu
+  ChevronLeft, ChevronRight, Users, FileText, Menu, GalleryHorizontal
 } from 'lucide-react';
 
 const AdminGaleri = () => {
@@ -183,7 +183,7 @@ const handleFileChange = (e) => {
       </Link>
       <Link to="/admin/galeri">
         <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-blue-700 bg-blue-900">
-          <Users size={20} />
+          <GalleryHorizontal size={20} />
           {showSidebar && <span className="ml-4">Galeri</span>}
         </div>
       </Link>
