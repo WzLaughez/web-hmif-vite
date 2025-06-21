@@ -1,36 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import supabase from './utils/supabaseClient';
-import PengumumanFormModal from './modals/PengumumanFormModal';
-import DeleteConfirmationModal from './modals/DeleteModals';
 import { Link } from 'react-router-dom';
 import {
   Search, PlusCircle, Edit, Trash2, AlertCircle, X,
   ChevronLeft, ChevronRight, Users, FileText, Menu, GalleryHorizontal
 } from 'lucide-react';
 import PengurusEditModal from './modals/PengurusEditModal';
-
+import MenteriEditModal from './modals/MenteriEditModal';
+import TambahAnggotaModal from './modals/TambahAnggotaModal';
+import AnggotaEditModal from './modals/AnggotaEditModal';
 const AdminPengurus = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showSidebar, setShowSidebar] = useState(true);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [currentPengumuman, setCurrentPengumuman] = useState(null);
   const [notification, setNotification] = useState({ show: false, message: '', type: '' });
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    date: '',
-    image_url: ''
-  });
+
 
   // State for pengurus
   const [pengurusData, setPengurusData] = useState([]);
   const [currentPengurus, setCurrentPengurus] = useState(null);
   const [showEditModalPengurus, setShowEditModalPengurus] = useState(false);
-  const [showDeleteModalPengurus, setShowDeleteModalPengurus] = useState(false);
+  // const [showDeleteModalPengurus, setShowDeleteModalPengurus] = useState(false);
 
   const handleEditPengurus = (p) => {
     setCurrentPengurus(p);           // set data pengurus terpilih
@@ -94,9 +86,207 @@ const AdminPengurus = () => {
 
   // State untuk menteri
   const [menteriData, setMenteriData] = useState([]);
+  const [currentMenteri, setCurrentMenteri] = useState(null);
+  const [showEditModalMenteri, setShowEditModalMenteri] = useState(false);
+  // const [showDeleteModalMenteri, setShowDeleteModalMenteri] = useState(false);
+
+  // Handler edit menteri
+const handleEditMenteri = (m) => {
+  setCurrentMenteri(m);              // simpan data menteri terpilih
+  setShowEditModalMenteri(true);     // tampilkan modal edit
+};
+// Handler delete menteri
+const handleDeleteMenteri = async (id) => {
+  if (!confirm('Yakin ingin menghapus menteri ini?')) return;
+
+  const { error } = await supabase
+    .from('menteri')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    showNotification('Gagal menghapus menteri', 'error');
+  } else {
+    setMenteriData((prev) => prev.filter((m) => m.id !== id));
+    showNotification('Menteri berhasil dihapus', 'success');
+  }
+};
+const handleUpdateMenteri = async () => {
+  let image_url = currentMenteri.foto_url; // default pakai foto lama
+
+  if (selectedFile) {
+    const fileExt = selectedFile.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `public/${fileName}`;
+
+    const { error: uploadError } = await supabase
+      .storage
+      .from('pengumuman')
+      .upload(filePath, selectedFile);
+
+    if (uploadError) {
+      showNotification('Gagal upload gambar', 'error');
+      return;
+    }
+
+    const { data: publicUrl } = supabase
+      .storage
+      .from('pengumuman')
+      .getPublicUrl(filePath);
+
+    image_url = publicUrl.publicUrl;
+  }
+
+  const { id, nama, jabatan } = currentMenteri;
+  const { error } = await supabase
+    .from('menteri')
+    .update({ nama, jabatan, foto_url: image_url })
+    .eq('id', id);
+
+  if (error) {
+    showNotification('Gagal memperbarui menteri', 'error');
+    console.error('Update error:', error);
+  } else {
+    setMenteriData((prev) =>
+      prev.map((m) => (m.id === id ? { ...m, nama, jabatan, foto_url: image_url } : m))
+    );
+
+    showNotification('Menteri berhasil diperbarui', 'success');
+    setShowEditModalMenteri(false);
+    setSelectedFile(null); // reset file
+  }
+};
+
 
   // State untuk divisi
   const [divisiData, setDivisiData] = useState([]);
+  const [currentDivisi, setCurrentDivisi] = useState(null);
+  const [showEditModalDivisi, setShowEditModalDivisi] = useState(false);
+  const [divisiList, setDivisiList] = useState([]);
+
+  // State untuk anggota divisi
+  const [currentAnggota, setCurrentAnggota] = useState(null);
+  const [showEditModalAnggota, setShowEditModalAnggota] = useState(false);
+  const [showTambahModalAnggota, setShowTambahModalAnggota] = useState(false);
+  // Edit Divisi
+const handleEditDivisi = (d) => {
+  setCurrentDivisi(d);
+  setShowEditModalDivisi(true); // Tampilkan modal edit divisi
+};
+
+// Delete Divisi
+const handleDeleteDivisi = async (id) => {
+  if (!confirm('Yakin ingin menghapus divisi ini?')) return;
+  const { error } = await supabase.from('divisi').delete().eq('id', id);
+  if (error) {
+    showNotification('Gagal menghapus divisi', 'error');
+  } else {
+    setDivisiData((prev) => prev.filter((divisi) => divisi.id !== id));
+    showNotification('Divisi berhasil dihapus', 'success');
+  }
+};
+
+// Tambah Anggota Divisi
+const handleAddAnggota = async ({ nama, divisi_id, file }) => {
+  let imageUrl = '';
+  if (file) {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `public/${fileName}`;
+
+    const { error: uploadError } = await supabase
+      .storage
+      .from('pengumuman')
+      .upload(filePath, file);
+    if (uploadError) {
+      showNotification('Gagal upload gambar', 'error');
+      return;
+    }
+
+    const { data: publicUrl } = supabase
+      .storage
+      .from('pengumuman')
+      .getPublicUrl(filePath);
+
+    imageUrl = publicUrl.publicUrl;
+  }
+
+  const { error } = await supabase
+    .from('anggota_divisi')
+    .insert([{ nama, divisi_id, foto_url: imageUrl }]);
+  if (error) {
+    showNotification('Gagal menambahkan anggota', 'error');
+  } else {
+    showNotification('Anggota berhasil ditambahkan', 'success');
+    setShowTambahModalAnggota(false);
+    fetchData(); // refresh list divisi dan anggotanya
+  }
+};
+// Edit Anggota Divisi
+const handleEditAnggota = (anggota) => {
+  setCurrentAnggota(anggota);
+  setShowEditModalAnggota(true); // tampilkan modal edit anggota
+};
+const handleUpdateAnggota = async ({ id, nama, divisi_id, file }) => {
+  let imageUrl = currentAnggota.foto;
+
+  // Jika ada file baru, upload
+  if (file) {
+    const fileExt = file.name.split('.').pop();
+    const filePath = `public/${Date.now()}.${fileExt}`;
+    const { error: uploadError } = await supabase
+      .storage
+      .from('pengumuman')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      showNotification('Gagal upload gambar', 'error');
+      return;
+    }
+
+    const { data: publicUrl } = supabase
+      .storage
+      .from('pengumuman')
+      .getPublicUrl(filePath);
+
+    imageUrl = publicUrl.publicUrl;
+  }
+
+  // Update di tabel anggota_divisi
+  const { error } = await supabase
+    .from('anggota_divisi')
+    .update({ nama, divisi_id, foto_url: imageUrl })
+    .eq('id', id);
+
+  if (error) {
+    showNotification('Gagal memperbarui anggota', 'error');
+  } else {
+    showNotification('Anggota berhasil diperbarui', 'success');
+    setShowEditModalAnggota(false);
+    setCurrentAnggota(null);
+    // refresh list anggota_divisi Anda
+  }
+};
+
+// Delete Anggota Divisi
+const handleDeleteAnggota = async (id) => {
+  if (!confirm('Yakin ingin menghapus anggota ini?')) return;
+  const { error } = await supabase.from('anggota_divisi').delete().eq('id', id);
+  if (error) {
+    showNotification('Gagal menghapus anggota', 'error');
+  } else {
+    setDivisiData((prev) =>
+      prev.map((divisi) =>
+        divisi.id === currentDivisi.id
+          ? { ...divisi, anggota_divisi: divisi.anggota_divisi.filter((a) => a.id !== id) }
+          : divisi
+      )
+    );
+    showNotification('Anggota berhasil dihapus', 'success');
+  }
+};
+
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -125,106 +315,7 @@ const handleFileChange = (e) => {
   };
 
 
-  const confirmDelete = async () => {
-    const { error } = await supabase.from('pengumuman').delete().eq('id', currentPengumuman.id);
-    if (!error) {
-      setPengumumans(pengumumans.filter(item => item.id !== currentPengumuman.id));
-      showNotification('Pengumuman berhasil dihapus', 'success');
-    } else {
-      showNotification('Gagal menghapus pengumuman', 'error');
-    }
-    setShowDeleteModal(false);
-  };
-
-  const handleEdit = (pengumuman) => {
-    setCurrentPengumuman(pengumuman);
-    setFormData({
-      title: pengumuman.title,
-      content: pengumuman.content,
-      date: pengumuman.date,
-      image_url: pengumuman.image_url
-    });
-    setShowEditModal(true);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-  const handleAddForm = async () => {
-  let image_url = '';
-
-  if (selectedFile) {
-    const fileExt = selectedFile.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `public/${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('pengumuman') // sesuaikan dengan nama bucket-mu
-      .upload(filePath, selectedFile);
-
-    if (uploadError) {
-      
-      console.error('Upload error:', uploadError);
-      showNotification('Gagal upload gambar', 'error');
-      return;
-    }
-
-    const { data: publicUrl } = supabase
-      .storage
-      .from('pengumuman')
-      .getPublicUrl(filePath);
-
-    image_url = publicUrl.publicUrl;
-  }
-
-  const { data, error } = await supabase
-      .from('pengumuman')
-      .insert([{
-        ...formData,
-        image_url: image_url || ''
-      }])
-      .select();
-
-    if (!error) {
-      setPengumumans([...pengumumans, ...data]);
-      showNotification('Pengumuman berhasil ditambahkan', 'success');
-      setShowEditModal(false);
-      resetForm();
-    } else {
-      console.error('Insert error:', error);
-      showNotification('Gagal menambahkan pengumuman', 'error');
-    }
-  };
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (currentPengumuman) {
-    // update logika tetap
-    const { error } = await supabase
-      .from('pengumuman')
-      .update(formData)
-      .eq('id', currentPengumuman.id);
-
-    if (!error) {
-      setPengumumans(pengumumans.map(item =>
-        item.id === currentPengumuman.id ? { ...item, ...formData } : item
-      ));
-      showNotification('Pengumuman berhasil diperbarui', 'success');
-      setShowEditModal(false);
-      resetForm();
-    } else {
-      showNotification('Gagal memperbarui pengumuman', 'error');
-    }
-  } else {
-    // gunakan ini untuk tambah baru
-    await handleAddForm();
-  }
-};
-
-  const resetForm = () => {
-    setFormData({ title: '', content: '', date: '', image_url: '' });
-    setCurrentPengumuman(null);
-  };
+  if (loading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
 
   const showNotification = (message, type) => {
     setNotification({ show: true, message, type });
@@ -295,13 +386,13 @@ const handleFileChange = (e) => {
               <td className="p-2">{p.jabatan}</td>
               <td className="p-2">{p.nama}</td>
               <td className="p-2">
-                <img src={p.foto || '/placeholder.png'} className="w-12 h-12 rounded-full object-cover" />
+                <img src={p.foto_url || '/placeholder.png'} className="w-12 h-12 rounded-full object-cover" />
               </td>
               <td className="p-2 text-center">
                 <button className="text-blue-600 hover:bg-blue-100 p-1 mr-2" onClick={() => handleEditPengurus(p)}><Edit size={18} /></button>
-                <button className="text-red-600 hover:bg-red-100 p-1" onClick={() => handleDeletePengurus(p.id)}>
+                {/* <button className="text-red-600 hover:bg-red-100 p-1" onClick={() => handleDeletePengurus(p.id)}>
                   <Trash2 size={18} />
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}
@@ -332,18 +423,25 @@ const handleFileChange = (e) => {
             <tr key={m.id} className="hover:bg-blue-50 border-b">
               <td className="p-2">{m.jabatan}</td>
               <td className="p-2">{m.nama}</td>
-              <td className="p-2"><img src={m.foto || '/placeholder.png'} className="w-12 h-12 rounded-full object-cover" /></td>
+              <td className="p-2"><img src={m.foto_url || '/placeholder.png'} className="w-12 h-12 rounded-full object-cover" /></td>
               <td className="p-2 text-center">
-                <button className="text-blue-600 hover:bg-blue-100 p-1 mr-2"><Edit size={18} /></button>
-                <button className="text-red-600 hover:bg-red-100 p-1" onClick={() => handleDeletePengurus(p.id)}>
+                <button className="text-blue-600 hover:bg-blue-100 p-1 mr-2" onClick={() => handleEditMenteri(m)}><Edit size={18} /></button>
+                {/* <button className="text-red-600 hover:bg-red-100 p-1" onClick={() => handleDeletePengurus(p.id)}>
                   <Trash2 size={18} />
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
+      <MenteriEditModal
+          isOpen={showEditModalMenteri}
+          onClose={() => setShowEditModalMenteri(false)}
+          pengurus={currentMenteri}
+          setPengurus={setCurrentMenteri}
+          onSave={handleUpdateMenteri}
+          handleFileChange={handleFileChange}
+      />
           {/* Search and Add */}
           <div className="flex justify-between items-center mb-6">
             <div className="relative">
@@ -359,14 +457,17 @@ const handleFileChange = (e) => {
 
             <button
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center"
-              onClick={() => {
-                resetForm();
-                setShowEditModal(true);
-              }}
+              onClick={() => setShowTambahModalAnggota(true)}
             >
-              <PlusCircle size={18} className="mr-2" /> Tambah Baru
+              <PlusCircle size={18} className="mr-2" /> Tambah Anggota
             </button>
           </div>
+          <TambahAnggotaModal
+            isOpen={showTambahModalAnggota}
+            onClose={() => setShowTambahModalAnggota(false)}
+            onAdd={handleAddAnggota}
+            divisiList={divisiData}
+          />
       {/* === DIVISI SECTION === */}
         <h2 className="text-xl font-semibold mt-6 mb-2">Divisi dan Anggota</h2>
 
@@ -381,11 +482,11 @@ const handleFileChange = (e) => {
               ) : (
                 <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mr-3">👤</div>
               )}
-              <span className="text-sm font-medium">Ketua: {d.ketua_nama}</span>
-                        <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2">
+              <span className="text-sm font-medium">Ketua : {d.ketua_nama}</span>
+                        <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2" onClick={() => handleEditDivisi(d)}>
                           <Edit size={18} />
                         </button>
-                        <button className="text-red-600 hover:bg-red-100 p-1 rounded">
+                        <button className="text-red-600 hover:bg-red-100 p-1 rounded" onClick={() => handleDeleteDivisi(d.id)}>
                           <Trash2 size={18} />
                         </button>
             </div>
@@ -404,9 +505,9 @@ const handleFileChange = (e) => {
                   d.anggota_divisi.map((anggota) => (
                     <tr key={anggota.id} className="hover:bg-blue-50">
                       <td className="p-2 border-b border-gray-200">
-                        {anggota.foto ? (
+                        {anggota.foto_url ? (
                           <img
-                            src={anggota.foto}
+                            src={anggota.foto_url}
                             className="w-10 h-10 rounded-full object-cover"
                             alt={anggota.nama}
                           />
@@ -416,10 +517,17 @@ const handleFileChange = (e) => {
                       </td>
                       <td className="p-2 border-b border-gray-200 text-sm">{anggota.nama}</td>
                       <td className="p-2 border-b border-gray-200 text-center">
-                        <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2">
+                        <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2" onClick={() => handleEditAnggota(anggota)}>
                           <Edit size={18} />
                         </button>
-                        <button className="text-red-600 hover:bg-red-100 p-1 rounded">
+                      <AnggotaEditModal
+                        isOpen={showEditModalAnggota}
+                        onClose={() => setShowEditModalAnggota(false)}
+                        anggota={currentAnggota}
+                        divisiList={divisiData}
+                        onUpdate={handleUpdateAnggota}
+                      />
+                        <button className="text-red-600 hover:bg-red-100 p-1 rounded" onClick={() => handleDeleteAnggota(anggota.id)}>
                           <Trash2 size={18} />
                         </button>
                       </td>
