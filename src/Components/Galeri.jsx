@@ -1,28 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import HeroPage from '../layouts/HeroPage';
-
+import supabase from './admin/utils/supabaseClient'
 import { Link } from 'react-router'
 const Galeri = () => {
-  const images = [
-    { src: '/background_gaya.png', title: 'Image 1' },
-    { src: '/background.png', title: 'Image 2' },
-    { src: '/ketua.png', title: 'Image 3' },
-    { src: '/Logo_Hijau.png', title: 'Image 3' },
-    { src: '/Logo_Kabinet.png', title: 'Image 3' },
-    // Add more images
-  ];
+  const [galeri, setGaleri] = useState([])
+    useEffect(() => {
+      const fetchGaleri = async () => {
+        const { data, error } = await supabase
+          .from('galeri')
+          .select('*')
+        if (error) console.error(error)
+        else {
+          console.log(data)
+          setGaleri(data)}
+      }
+  
+      fetchGaleri()
+    }, [])
   return (
     <>
     <HeroPage teks="Galeri"/>
     <div className="container mx-auto px-4 py-16 mt-16 max-w-6xl">
     <div className="flex flex-wrap justify-center gap-6">
-{images.map((item) => (
+{galeri.map((item) => (
      <Link 
      to='#'
      className="w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105"
    >
      <img 
-       src={item.src} 
+       src={item.image_url} 
        alt={item.title} 
        className="w-full h-36 object-cover"
      />

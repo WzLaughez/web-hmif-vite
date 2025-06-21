@@ -1,14 +1,14 @@
 import React from 'react';
 import { X } from 'lucide-react';
 
-const PengumumanFormModal = ({
+const GaleriFormModal = ({
   isOpen,
   onClose,
   onSubmit,
   formData,
   handleInputChange,
   handleFileChange,
-  currentPengumuman
+  currentGaleri
 }) => {
   if (!isOpen) return null;
 
@@ -17,7 +17,7 @@ const PengumumanFormModal = ({
       <div className="bg-white rounded-lg w-full max-w-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-bold">
-            {currentPengumuman ? 'Edit Pengumuman' : 'Tambah Pengumuman Baru'}
+            {currentGaleri ? 'Edit Galeri' : 'Tambah Galeri Baru'}
           </h3>
           <button
             className="text-gray-500 hover:text-gray-700"
@@ -40,29 +40,7 @@ const PengumumanFormModal = ({
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-medium mb-2">Tanggal</label>
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-medium mb-2">Konten</label>
-            <textarea
-              name="content"
-              value={formData.content}
-              onChange={handleInputChange}
-              rows="4"
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            ></textarea>
-          </div>
 
           <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-medium mb-2">Upload Gambar</label>
@@ -73,8 +51,6 @@ const PengumumanFormModal = ({
                     className="w-full p-2 border rounded"
                     />
                 </div>
-
-
           <div className="flex justify-end space-x-2">
             <button
               type="button"
@@ -87,7 +63,7 @@ const PengumumanFormModal = ({
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             >
-              {currentPengumuman ? 'Perbarui' : 'Simpan'}
+              {currentGaleri ? 'Perbarui' : 'Simpan'}
             </button>
           </div>
         </form>
@@ -96,4 +72,4 @@ const PengumumanFormModal = ({
   );
 };
 
-export default PengumumanFormModal;
+export default GaleriFormModal;
