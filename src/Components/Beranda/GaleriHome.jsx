@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import GaleriHomeGrid from './GaleriHomeGrid';
 import { FaArrowRight  } from "react-icons/fa";
+import supabase from '../admin/utils/supabaseClient'
 const GaleriHome = () => {
   useEffect(() => {
     AOS.init({
@@ -10,14 +11,20 @@ const GaleriHome = () => {
       once: false,
     });
   }, []);
-  const images = [
-    { src: '/background_gaya.png', title: 'Image 1' },
-    { src: '/background.png', title: 'Image 2' },
-    { src: '/ketua.png', title: 'Image 3' },
-    { src: '/Logo_Hijau.png', title: 'Image 3' },
-    { src: '/Logo_Kabinet.png', title: 'Image 3' },
-    // Add more images
-  ];
+  const [galeri, setGaleri] = useState([])
+    useEffect(() => {
+      const fetchGaleri = async () => {
+        const { data, error } = await supabase
+          .from('galeri')
+          .select('*')
+        if (error) console.error(error)
+        else {
+          console.log(data)
+          setGaleri(data)}
+      }
+  
+      fetchGaleri()
+    }, [])
   
   return (
     <div data-aos="fade-up" className="relative w-full">
@@ -36,7 +43,7 @@ const GaleriHome = () => {
       {/* Main Content */}
       <div className="relative px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         <div className="max-w-6xl mx-auto">
-          <GaleriHomeGrid images={images} />
+          <GaleriHomeGrid images={galeri} />
         </div>
       </div>
       <div className="text-center mb-12" >

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaArrowRight } from "react-icons/fa";
+import supabase from '../admin/utils/supabaseClient'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Link } from 'react-router';
@@ -32,30 +33,22 @@ const ArticleCard = ({ id,title, date, description, image }) => {
 };
 
 const ArticleSection = () => {
-  // const [articles] = useState(pengumumanData.pengumuman);
-  const articles = [
-    {
-      id: "1",
-      title: "Pendaftaran Anggota Baru 2024",
-      date: "15 Januari 2024",
-      imageUrl: "/background.png",
-      content: "lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      id: "2",
-      title: "Workshop Teknologi Terbaru",
-      date: "20 Februari 2024",
-      imageUrl: "/background_gaya.png",
-      content: "lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      id: "3",
-      title: "Hackathon HMIF 2024",
-      date: "10 Maret 2024",
-      imageUrl: "/Logo_Hijau.png",
-      content: "lorem200 ipsum dolor sit amet, consectetur adipiscing elit."
+  const [pengumuman, setPengumuman] = useState([])
+  useEffect(() => {
+    const fetchPengumuman = async () => {
+      const { data, error } = await supabase
+        .from('pengumuman')
+        .select('*')
+        .order('date', { ascending: false })
+        .limit(3)
+      if (error) console.error(error)
+      else {
+        console.log(data)
+        setPengumuman(data)}
     }
-  ];
+
+    fetchPengumuman()
+  }, [])
   
   return (
     <div className="py-12 mt-12" data-aos="fade-up">
@@ -68,7 +61,7 @@ const ArticleSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article, index) => {
+          {pengumuman.map((article, index) => {
             const animation = index % 3 === 1 ? "fade-down" : "fade-right";
             
             return (
@@ -83,7 +76,7 @@ const ArticleSection = () => {
                   title={article.title}
                   date={article.date}
                   description={article.content}
-                  image={article.imageUrl}
+                  image={article.image_url}
                 />
               </div>
             );
