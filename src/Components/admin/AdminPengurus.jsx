@@ -9,10 +9,10 @@ import PengurusEditModal from './modals/PengurusEditModal';
 import MenteriEditModal from './modals/MenteriEditModal';
 import TambahAnggotaModal from './modals/TambahAnggotaModal';
 import AnggotaEditModal from './modals/AnggotaEditModal';
+import DeleteAnggotaModal from './modals/DeleteAnggotaModals';
 const AdminPengurus = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showSidebar, setShowSidebar] = useState(true);
   const [notification, setNotification] = useState({ show: false, message: '', type: '' });
@@ -168,6 +168,8 @@ const handleUpdateMenteri = async () => {
   const [currentAnggota, setCurrentAnggota] = useState(null);
   const [showEditModalAnggota, setShowEditModalAnggota] = useState(false);
   const [showTambahModalAnggota, setShowTambahModalAnggota] = useState(false);
+  const [currentDeleteAnggota, setCurrentDeleteAnggota] = useState(null);
+  const [showDeleteModalAnggota, setShowDeleteModalAnggota] = useState(false);
   // Edit Divisi
 const handleEditDivisi = (d) => {
   setCurrentDivisi(d);
@@ -217,8 +219,8 @@ const handleAddAnggota = async ({ nama, divisi_id, file }) => {
   if (error) {
     showNotification('Gagal menambahkan anggota', 'error');
   } else {
-    showNotification('Anggota berhasil ditambahkan', 'success');
     setShowTambahModalAnggota(false);
+    showNotification('Anggota berhasil ditambahkan', 'success');
     fetchData(); // refresh list divisi dan anggotanya
   }
 };
@@ -269,22 +271,29 @@ const handleUpdateAnggota = async ({ id, nama, divisi_id, file }) => {
 };
 
 // Delete Anggota Divisi
-const handleDeleteAnggota = async (id) => {
-  if (!confirm('Yakin ingin menghapus anggota ini?')) return;
+const openDeleteModalAnggota = (anggota) => {
+  setCurrentDeleteAnggota(anggota);
+  setShowDeleteModalAnggota(true);
+};
+
+const handleConfirmDeleteAnggota = async (id) => {
   const { error } = await supabase.from('anggota_divisi').delete().eq('id', id);
   if (error) {
     showNotification('Gagal menghapus anggota', 'error');
   } else {
     setDivisiData((prev) =>
       prev.map((divisi) =>
-        divisi.id === currentDivisi.id
+        divisi.id === currentDeleteAnggota?.divisi_id
           ? { ...divisi, anggota_divisi: divisi.anggota_divisi.filter((a) => a.id !== id) }
           : divisi
       )
     );
     showNotification('Anggota berhasil dihapus', 'success');
   }
+  setShowDeleteModalAnggota(false); // tutup modal
+  setCurrentDeleteAnggota(null);    // reset
 };
+
 
 
   useEffect(() => {
@@ -520,16 +529,10 @@ const handleFileChange = (e) => {
                         <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2" onClick={() => handleEditAnggota(anggota)}>
                           <Edit size={18} />
                         </button>
-                      <AnggotaEditModal
-                        isOpen={showEditModalAnggota}
-                        onClose={() => setShowEditModalAnggota(false)}
-                        anggota={currentAnggota}
-                        divisiList={divisiData}
-                        onUpdate={handleUpdateAnggota}
-                      />
-                        <button className="text-red-600 hover:bg-red-100 p-1 rounded" onClick={() => handleDeleteAnggota(anggota.id)}>
+                        <button className="text-red-600 hover:bg-red-100 p-1 rounded" onClick={() => openDeleteModalAnggota(anggota)}>
                           <Trash2 size={18} />
                         </button>
+                      
                       </td>
                     </tr>
                   ))
@@ -544,7 +547,20 @@ const handleFileChange = (e) => {
         ))}
 
         </div>
-        
+        <AnggotaEditModal
+          isOpen={showEditModalAnggota}
+          onClose={() => setShowEditModalAnggota(false)}
+          anggota={currentAnggota}
+          divisiList={divisiData}
+          onUpdate={handleUpdateAnggota}
+          />
+          <DeleteAnggotaModal
+        isOpen={showDeleteModalAnggota}
+        onClose={() => setShowDeleteModalAnggota(false)}
+        anggota={currentDeleteAnggota}
+        onDelete={handleConfirmDeleteAnggota}
+          />
+
         <footer className="bg-white p-4 shadow mt-auto">
           <p className="text-center text-gray-600">© 2023 Admin Panel</p>
         </footer>

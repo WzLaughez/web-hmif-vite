@@ -4,6 +4,7 @@ import 'aos/dist/aos.css';
 import GaleriHomeGrid from './GaleriHomeGrid';
 import { FaArrowRight  } from "react-icons/fa";
 import supabase from '../admin/utils/supabaseClient'
+import { Link } from 'react-router-dom';
 const GaleriHome = () => {
   useEffect(() => {
     AOS.init({
@@ -48,10 +49,12 @@ const GaleriHome = () => {
       </div>
       <div className="text-center mb-12" >
           <button className="bg-Peach  px-8 py-3 rounded-lg hover:bg-Peach/80 transition-colors duration-200 font-medium">
+          <Link to="/galeri">
           <div className="flex items-center space-x-2">
             <span>View All Gallery</span>
             <FaArrowRight className="" />
           </div>
+          </Link>
           </button>
           
         </div>

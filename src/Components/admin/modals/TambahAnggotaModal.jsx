@@ -4,10 +4,13 @@ export default function TambahAnggotaModal({ isOpen, onClose, onAdd, divisiList 
   const [nama, setNama] = useState("");
   const [selectedDivisi, setSelectedDivisi] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAdd({ nama, divisi_id: selectedDivisi, file: selectedFile }); // pass data ke handler luar
+    setLoading(true);
+    await onAdd({ nama, divisi_id: selectedDivisi, file: selectedFile }); 
+    setLoading(false);
+    onClose();
     setNama("");
     setSelectedFile(null);
     setSelectedDivisi("");
@@ -79,9 +82,10 @@ export default function TambahAnggotaModal({ isOpen, onClose, onAdd, divisiList 
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+              disabled={loading}
             >
-              Tambah
+              {loading ? "Menyimpan..." : "Tambah"}
             </button>
           </div>
 
