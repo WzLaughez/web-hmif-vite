@@ -61,7 +61,14 @@ const Kepengurusan = () => {
   const [activeDivisi, setActiveDivisi] = useState('ADINOVA');
   const currentDivisi = divisiData.find((d) => d.kode_divisi === activeDivisi);
   
-  if (loading) return <div>Loading...</div>;
+    if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
+      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+    </div>
+  )
+}
   return (
     <>
       <div className="container mx-auto md:p-8 max-w-6xl">
@@ -83,7 +90,7 @@ const Kepengurusan = () => {
             >
               <div key={index} className="bg-white  rounded-lg shadow-md p-4 w-48 text-center">
       {person.foto_url ? (
-        <img src={person.foto_url} alt={person.nama} className="rounded-full h-32 w-32 mx-auto mb-2 object-cover" />
+        <img src={person.foto_url} alt={person.nama} className="mx-auto mb-2 w-32 h-32 md:w-40 md:h-40 object-contain"/>
       ) : (
         <FaUser className="h-32 w-32 mx-auto mb-2 text-gray-500" /> // Icon if no photo
       )}
@@ -111,7 +118,7 @@ const Kepengurusan = () => {
             >
               <div key={index} className="bg-white  rounded-lg shadow-md p-4 w-48 text-center">
       {person.foto_url ? (
-        <img src={person.foto_url} alt={person.nama} className="rounded-full h-32 w-32 mx-auto mb-2 object-cover" />
+        <img src={person.foto_url} alt={person.nama} className="mx-auto mb-2 w-32 h-32 md:w-40 md:h-40 object-contain"/>
       ) : (
         <FaUser className="h-32 w-32 mx-auto mb-2 text-gray-500" /> // Icon if no photo
       )}
@@ -180,7 +187,7 @@ const Kepengurusan = () => {
           <img
             src={currentDivisi.ketua_foto_url}
             alt={currentDivisi.ketua_nama}
-            className="rounded-full h-24 md:h-40 md:w-40 mx-auto object-cover mb-2"
+            className="mx-auto mb-2 w-32 h-32 md:w-40 md:h-40 object-contain"
           />
         ) : (
           <FaBriefcase className="h-24 w-24 md:h-40 md:w-40 mx-auto mb-2 text-gray-500" />
@@ -201,7 +208,7 @@ const Kepengurusan = () => {
               <img
                 src={anggota.foto_url}
                 alt={anggota.nama}
-                className="rounded-full h-16 w-16 md:h-24 md:w-24 mx-auto mb-2 object-cover"
+                className="mx-auto mb-2 w-32 h-32 md:w-40 md:h-40 object-contain"
               />
             ) : (
               <FaUsers className="h-16 w-16 md:h-24 md:w-24 mx-auto mb-2 text-gray-500" />

@@ -14,13 +14,6 @@ const MenteriEditModal = ({ isOpen,
       <div className="bg-white p-6 rounded w-96 relative shadow-lg">
         <h3 className="text-lg font-semibold mb-4">Edit Pengurus</h3>
 
-        {/* Input Nama */}
-        <label className="block mb-2">Nama:</label>
-        <input
-          className="w-full border p-2 mb-4"
-          value={pengurus.nama}
-          onChange={(e) => setPengurus({ ...pengurus, nama: e.target.value })}
-        />
 
         {/* Input Jabatan */}
         <label className="block mb-2">Jabatan:</label>
@@ -28,6 +21,13 @@ const MenteriEditModal = ({ isOpen,
           className="w-full border p-2 mb-4"
           value={pengurus.jabatan}
           onChange={(e) => setPengurus({ ...pengurus, jabatan: e.target.value })}
+        />
+        {/* Input Nama */}
+        <label className="block mb-2">Nama:</label>
+        <input
+          className="w-full border p-2 mb-4"
+          value={pengurus.nama}
+          onChange={(e) => setPengurus({ ...pengurus, nama: e.target.value })}
         />
 
         {/* Input Foto (opsional) */}

@@ -6,6 +6,7 @@ import { FaArrowRight  } from "react-icons/fa";
 import supabase from '../admin/utils/supabaseClient'
 import { Link } from 'react-router-dom';
 const GaleriHome = () => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -18,15 +19,25 @@ const GaleriHome = () => {
         const { data, error } = await supabase
           .from('galeri')
           .select('*')
+          .order('created_at', { ascending: false })
+          .limit(5) // Ambil 6 data terbaru
         if (error) console.error(error)
         else {
-          console.log(data)
-          setGaleri(data)}
+          setGaleri(data)
+          setLoading(false);}
       }
   
       fetchGaleri()
     }, [])
-  
+    
+    if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
+      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+    </div>
+  )
+}
   return (
     <div data-aos="fade-up" className="relative w-full">
       {/* Header */}

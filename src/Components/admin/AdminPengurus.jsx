@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import PengurusEditModal from './modals/PengurusEditModal';
 import MenteriEditModal from './modals/MenteriEditModal';
+import EditDivisiModal from './modals/DivisiEditModal';
 import TambahAnggotaModal from './modals/TambahAnggotaModal';
 import AnggotaEditModal from './modals/AnggotaEditModal';
 import DeleteAnggotaModal from './modals/DeleteAnggotaModals';
@@ -91,71 +92,71 @@ const AdminPengurus = () => {
   // const [showDeleteModalMenteri, setShowDeleteModalMenteri] = useState(false);
 
   // Handler edit menteri
-const handleEditMenteri = (m) => {
-  setCurrentMenteri(m);              // simpan data menteri terpilih
-  setShowEditModalMenteri(true);     // tampilkan modal edit
-};
-// Handler delete menteri
-const handleDeleteMenteri = async (id) => {
-  if (!confirm('Yakin ingin menghapus menteri ini?')) return;
+  const handleEditMenteri = (m) => {
+    setCurrentMenteri(m);              // simpan data menteri terpilih
+    setShowEditModalMenteri(true);     // tampilkan modal edit
+  };
+  // Handler delete menteri
+  const handleDeleteMenteri = async (id) => {
+    if (!confirm('Yakin ingin menghapus menteri ini?')) return;
 
-  const { error } = await supabase
-    .from('menteri')
-    .delete()
-    .eq('id', id);
+    const { error } = await supabase
+      .from('menteri')
+      .delete()
+      .eq('id', id);
 
-  if (error) {
-    showNotification('Gagal menghapus menteri', 'error');
-  } else {
-    setMenteriData((prev) => prev.filter((m) => m.id !== id));
-    showNotification('Menteri berhasil dihapus', 'success');
-  }
-};
-const handleUpdateMenteri = async () => {
-  let image_url = currentMenteri.foto_url; // default pakai foto lama
+    if (error) {
+      showNotification('Gagal menghapus menteri', 'error');
+    } else {
+      setMenteriData((prev) => prev.filter((m) => m.id !== id));
+      showNotification('Menteri berhasil dihapus', 'success');
+    }
+  };
+  const handleUpdateMenteri = async () => {
+    let image_url = currentMenteri.foto_url; // default pakai foto lama
 
-  if (selectedFile) {
-    const fileExt = selectedFile.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `public/${fileName}`;
+    if (selectedFile) {
+      const fileExt = selectedFile.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `public/${fileName}`;
 
-    const { error: uploadError } = await supabase
-      .storage
-      .from('pengumuman')
-      .upload(filePath, selectedFile);
+      const { error: uploadError } = await supabase
+        .storage
+        .from('pengumuman')
+        .upload(filePath, selectedFile);
 
-    if (uploadError) {
-      showNotification('Gagal upload gambar', 'error');
-      return;
+      if (uploadError) {
+        showNotification('Gagal upload gambar', 'error');
+        return;
+      }
+
+      const { data: publicUrl } = supabase
+        .storage
+        .from('pengumuman')
+        .getPublicUrl(filePath);
+
+      image_url = publicUrl.publicUrl;
     }
 
-    const { data: publicUrl } = supabase
-      .storage
-      .from('pengumuman')
-      .getPublicUrl(filePath);
+    const { id, nama, jabatan } = currentMenteri;
+    const { error } = await supabase
+      .from('menteri')
+      .update({ nama, jabatan, foto_url: image_url })
+      .eq('id', id);
 
-    image_url = publicUrl.publicUrl;
-  }
+    if (error) {
+      showNotification('Gagal memperbarui menteri', 'error');
+      console.error('Update error:', error);
+    } else {
+      setMenteriData((prev) =>
+        prev.map((m) => (m.id === id ? { ...m, nama, jabatan, foto_url: image_url } : m))
+      );
 
-  const { id, nama, jabatan } = currentMenteri;
-  const { error } = await supabase
-    .from('menteri')
-    .update({ nama, jabatan, foto_url: image_url })
-    .eq('id', id);
-
-  if (error) {
-    showNotification('Gagal memperbarui menteri', 'error');
-    console.error('Update error:', error);
-  } else {
-    setMenteriData((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, nama, jabatan, foto_url: image_url } : m))
-    );
-
-    showNotification('Menteri berhasil diperbarui', 'success');
-    setShowEditModalMenteri(false);
-    setSelectedFile(null); // reset file
-  }
-};
+      showNotification('Menteri berhasil diperbarui', 'success');
+      setShowEditModalMenteri(false);
+      setSelectedFile(null); // reset file
+    }
+  };
 
 
   // State untuk divisi
@@ -163,136 +164,174 @@ const handleUpdateMenteri = async () => {
   const [currentDivisi, setCurrentDivisi] = useState(null);
   const [showEditModalDivisi, setShowEditModalDivisi] = useState(false);
   const [divisiList, setDivisiList] = useState([]);
+  // Edit Divisi
+  const handleEditDivisi = (d) => {
+    setCurrentDivisi(d);
+    setShowEditModalDivisi(true); // Tampilkan modal edit divisi
+  };
+  const handleUpdateDivisi = async ({ id, nama, ketua_nama, deskripsi, file }) => {
+  let imageUrl = currentDivisi.ketua_foto;
 
+  if (file) {
+    const fileExt = file.name.split('.').pop();
+    const filePath = `public/${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await supabase
+      .storage
+      .from('pengumuman')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      showNotification('Gagal upload gambar', 'error');
+      return;
+    }
+
+    const { data: publicUrl } = supabase
+      .storage
+      .from('pengumuman')
+      .getPublicUrl(filePath);
+
+    imageUrl = publicUrl.publicUrl;
+  }
+
+  const { error } = await supabase
+    .from('divisi')
+    .update({ nama, ketua_nama, deskripsi, ketua_foto_url: imageUrl })
+    .eq('id', id);
+
+  if (error) {
+    showNotification('Gagal memperbarui divisi', 'error');
+  } else {
+    showNotification('Divisi berhasil diperbarui', 'success');
+    fetchData();
+  }
+};
+
+
+  // Delete Divisi
+  const handleDeleteDivisi = async (id) => {
+    if (!confirm('Yakin ingin menghapus divisi ini?')) return;
+    const { error } = await supabase.from('divisi').delete().eq('id', id);
+    if (error) {
+      showNotification('Gagal menghapus divisi', 'error');
+    } else {
+      setDivisiData((prev) => prev.filter((divisi) => divisi.id !== id));
+      showNotification('Divisi berhasil dihapus', 'success');
+    }
+  };
   // State untuk anggota divisi
   const [currentAnggota, setCurrentAnggota] = useState(null);
   const [showEditModalAnggota, setShowEditModalAnggota] = useState(false);
   const [showTambahModalAnggota, setShowTambahModalAnggota] = useState(false);
   const [currentDeleteAnggota, setCurrentDeleteAnggota] = useState(null);
   const [showDeleteModalAnggota, setShowDeleteModalAnggota] = useState(false);
-  // Edit Divisi
-const handleEditDivisi = (d) => {
-  setCurrentDivisi(d);
-  setShowEditModalDivisi(true); // Tampilkan modal edit divisi
-};
 
-// Delete Divisi
-const handleDeleteDivisi = async (id) => {
-  if (!confirm('Yakin ingin menghapus divisi ini?')) return;
-  const { error } = await supabase.from('divisi').delete().eq('id', id);
-  if (error) {
-    showNotification('Gagal menghapus divisi', 'error');
-  } else {
-    setDivisiData((prev) => prev.filter((divisi) => divisi.id !== id));
-    showNotification('Divisi berhasil dihapus', 'success');
-  }
-};
 
-// Tambah Anggota Divisi
-const handleAddAnggota = async ({ nama, divisi_id, file }) => {
-  let imageUrl = '';
-  if (file) {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `public/${fileName}`;
+  // Tambah Anggota Divisi
+  const handleAddAnggota = async ({ nama, divisi_id, file }) => {
+    let imageUrl = '';
+    if (file) {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `public/${fileName}`;
 
-    const { error: uploadError } = await supabase
-      .storage
-      .from('pengumuman')
-      .upload(filePath, file);
-    if (uploadError) {
-      showNotification('Gagal upload gambar', 'error');
-      return;
+      const { error: uploadError } = await supabase
+        .storage
+        .from('pengumuman')
+        .upload(filePath, file);
+      if (uploadError) {
+        showNotification('Gagal upload gambar', 'error');
+        return;
+      }
+
+      const { data: publicUrl } = supabase
+        .storage
+        .from('pengumuman')
+        .getPublicUrl(filePath);
+
+      imageUrl = publicUrl.publicUrl;
     }
 
-    const { data: publicUrl } = supabase
-      .storage
-      .from('pengumuman')
-      .getPublicUrl(filePath);
+    const { error } = await supabase
+      .from('anggota_divisi')
+      .insert([{ nama, divisi_id, foto_url: imageUrl }]);
+    if (error) {
+      showNotification('Gagal menambahkan anggota', 'error');
+    } else {
+      setShowTambahModalAnggota(false);
+      showNotification('Anggota berhasil ditambahkan', 'success');
+      fetchData(); // refresh list divisi dan anggotanya
+    }
+  };
+  // Edit Anggota Divisi
+  const handleEditAnggota = (anggota) => {
+    setCurrentAnggota(anggota);
+    setShowEditModalAnggota(true); // tampilkan modal edit anggota
+  };
+  const handleUpdateAnggota = async ({ id, nama, divisi_id, file }) => {
+    let imageUrl = currentAnggota.foto;
 
-    imageUrl = publicUrl.publicUrl;
-  }
+    // Jika ada file baru, upload
+    if (file) {
+      const fileExt = file.name.split('.').pop();
+      const filePath = `public/${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase
+        .storage
+        .from('pengumuman')
+        .upload(filePath, file);
 
-  const { error } = await supabase
-    .from('anggota_divisi')
-    .insert([{ nama, divisi_id, foto_url: imageUrl }]);
-  if (error) {
-    showNotification('Gagal menambahkan anggota', 'error');
-  } else {
-    setShowTambahModalAnggota(false);
-    showNotification('Anggota berhasil ditambahkan', 'success');
-    fetchData(); // refresh list divisi dan anggotanya
-  }
-};
-// Edit Anggota Divisi
-const handleEditAnggota = (anggota) => {
-  setCurrentAnggota(anggota);
-  setShowEditModalAnggota(true); // tampilkan modal edit anggota
-};
-const handleUpdateAnggota = async ({ id, nama, divisi_id, file }) => {
-  let imageUrl = currentAnggota.foto;
+      if (uploadError) {
+        showNotification('Gagal upload gambar', 'error');
+        return;
+      }
 
-  // Jika ada file baru, upload
-  if (file) {
-    const fileExt = file.name.split('.').pop();
-    const filePath = `public/${Date.now()}.${fileExt}`;
-    const { error: uploadError } = await supabase
-      .storage
-      .from('pengumuman')
-      .upload(filePath, file);
+      const { data: publicUrl } = supabase
+        .storage
+        .from('pengumuman')
+        .getPublicUrl(filePath);
 
-    if (uploadError) {
-      showNotification('Gagal upload gambar', 'error');
-      return;
+      imageUrl = publicUrl.publicUrl;
     }
 
-    const { data: publicUrl } = supabase
-      .storage
-      .from('pengumuman')
-      .getPublicUrl(filePath);
+    // Update di tabel anggota_divisi
+    const { error } = await supabase
+      .from('anggota_divisi')
+      .update({ nama, divisi_id, foto_url: imageUrl })
+      .eq('id', id);
 
-    imageUrl = publicUrl.publicUrl;
-  }
+    if (error) {
+      showNotification('Gagal memperbarui anggota', 'error');
+    } else {
+      showNotification('Anggota berhasil diperbarui', 'success');
+      setShowEditModalAnggota(false);
+      setCurrentAnggota(null);
+      // refresh list anggota_divisi Anda
+    }
+  };
 
-  // Update di tabel anggota_divisi
-  const { error } = await supabase
-    .from('anggota_divisi')
-    .update({ nama, divisi_id, foto_url: imageUrl })
-    .eq('id', id);
+  // Delete Anggota Divisi
+  const openDeleteModalAnggota = (anggota) => {
+    setCurrentDeleteAnggota(anggota);
+    setShowDeleteModalAnggota(true);
+  };
 
-  if (error) {
-    showNotification('Gagal memperbarui anggota', 'error');
-  } else {
-    showNotification('Anggota berhasil diperbarui', 'success');
-    setShowEditModalAnggota(false);
-    setCurrentAnggota(null);
-    // refresh list anggota_divisi Anda
-  }
-};
-
-// Delete Anggota Divisi
-const openDeleteModalAnggota = (anggota) => {
-  setCurrentDeleteAnggota(anggota);
-  setShowDeleteModalAnggota(true);
-};
-
-const handleConfirmDeleteAnggota = async (id) => {
-  const { error } = await supabase.from('anggota_divisi').delete().eq('id', id);
-  if (error) {
-    showNotification('Gagal menghapus anggota', 'error');
-  } else {
-    setDivisiData((prev) =>
-      prev.map((divisi) =>
-        divisi.id === currentDeleteAnggota?.divisi_id
-          ? { ...divisi, anggota_divisi: divisi.anggota_divisi.filter((a) => a.id !== id) }
-          : divisi
-      )
-    );
-    showNotification('Anggota berhasil dihapus', 'success');
-  }
-  setShowDeleteModalAnggota(false); // tutup modal
-  setCurrentDeleteAnggota(null);    // reset
-};
+  const handleConfirmDeleteAnggota = async (id) => {
+    const { error } = await supabase.from('anggota_divisi').delete().eq('id', id);
+    if (error) {
+      showNotification('Gagal menghapus anggota', 'error');
+    } else {
+      setDivisiData((prev) =>
+        prev.map((divisi) =>
+          divisi.id === currentDeleteAnggota?.divisi_id
+            ? { ...divisi, anggota_divisi: divisi.anggota_divisi.filter((a) => a.id !== id) }
+            : divisi
+        )
+      );
+      showNotification('Anggota berhasil dihapus', 'success');
+    }
+    setShowDeleteModalAnggota(false); // tutup modal
+    setCurrentDeleteAnggota(null);    // reset
+  };
 
 
 
@@ -304,7 +343,7 @@ const handleConfirmDeleteAnggota = async (id) => {
 
     // Fetch semua data sekaligus
     const [{ data: pengurus }, { data: menteri }, { data: divisi }] = await Promise.all([
-      supabase.from('pengurus_utama').select('*'),
+      supabase.from('pengurus_utama').select('*').order('id', { ascending: false }),
       supabase.from('menteri').select('*'),
       supabase.from('divisi').select('*, anggota_divisi(*)'),
     ]);
@@ -324,7 +363,7 @@ const handleFileChange = (e) => {
   };
 
 
-  if (loading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  
 
   const showNotification = (message, type) => {
     setNotification({ show: true, message, type });
@@ -332,6 +371,14 @@ const handleFileChange = (e) => {
   };
 
   const filteredDivisi = divisiData.filter((d) => d.nama.toLowerCase().includes(searchTerm.toLowerCase()));
+  if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
+      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+    </div>
+  )
+}
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -486,8 +533,8 @@ const handleFileChange = (e) => {
             <h3 className="text-lg font-bold mb-1">{d.nama}</h3>
             {/* <p className="text-sm text-gray-600 mb-2">{d.deskripsi}</p> */}
             <div className="flex items-center mb-4">
-              {d.ketua_foto ? (
-                <img src={d.ketua_foto} className="w-12 h-12 rounded-full mr-3" />
+              {d.ketua_foto_url ? (
+                <img src={d.ketua_foto_url} className="w-12 h-12 rounded-full mr-3" />
               ) : (
                 <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mr-3">👤</div>
               )}
@@ -495,9 +542,9 @@ const handleFileChange = (e) => {
                         <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2" onClick={() => handleEditDivisi(d)}>
                           <Edit size={18} />
                         </button>
-                        <button className="text-red-600 hover:bg-red-100 p-1 rounded" onClick={() => handleDeleteDivisi(d.id)}>
+                        {/* <button className="text-red-600 hover:bg-red-100 p-1 rounded" onClick={() => handleDeleteDivisi(d.id)}>
                           <Trash2 size={18} />
-                        </button>
+                        </button> */}
             </div>
 
         {/* Tabel Anggota */}
@@ -547,6 +594,12 @@ const handleFileChange = (e) => {
         ))}
 
         </div>
+        <EditDivisiModal
+          isOpen={showEditModalDivisi}
+          onClose={() => setShowEditModalDivisi(false)}
+          onSave={handleUpdateDivisi}
+          divisi={currentDivisi}
+        />
         <AnggotaEditModal
           isOpen={showEditModalAnggota}
           onClose={() => setShowEditModalAnggota(false)}

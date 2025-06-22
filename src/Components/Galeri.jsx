@@ -4,6 +4,7 @@ import supabase from './admin/utils/supabaseClient'
 import { Link } from 'react-router'
 const Galeri = () => {
   const [galeri, setGaleri] = useState([])
+  const [loading, setLoading] = useState(true);
     useEffect(() => {
       const fetchGaleri = async () => {
         const { data, error } = await supabase
@@ -12,11 +13,20 @@ const Galeri = () => {
         if (error) console.error(error)
         else {
           console.log(data)
-          setGaleri(data)}
+          setGaleri(data)
+        setLoading(false);}
       }
   
       fetchGaleri()
     }, [])
+  if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
+      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+    </div>
+  )
+}
   return (
     <>
     <HeroPage teks="Galeri"/>
@@ -30,7 +40,7 @@ const Galeri = () => {
      <img 
        src={item.image_url} 
        alt={item.title} 
-       className="w-full h-36 object-cover"
+       className="w-full h-36 object-contain"
      />
      <div className="p-5 flex flex-col flex-grow">
        <div className="flex flex-col">

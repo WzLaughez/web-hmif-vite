@@ -43,7 +43,6 @@ const ArticleSection = () => {
         .limit(3)
       if (error) console.error(error)
       else {
-        console.log(data)
         setPengumuman(data)}
     }
 

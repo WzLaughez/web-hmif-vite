@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import HeroPage from '../layouts/HeroPage'
 import supabase from './admin/utils/supabaseClient'
 import { Link } from 'react-router'
+import { motion } from "framer-motion";
 const Pengumuman = () => {
   const [pengumuman, setPengumuman] = useState([])
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchPengumuman = async () => {
       const { data, error } = await supabase
@@ -12,12 +14,22 @@ const Pengumuman = () => {
       if (error) console.error(error)
       else {
         console.log(data)
-        setPengumuman(data)}
+        setPengumuman(data)
+        setLoading(false);}
     }
 
     fetchPengumuman()
   }, [])
   
+  if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
+      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+    </div>
+  )
+}
+
   return (
     <>
       <HeroPage teks="Pengumuman"/>

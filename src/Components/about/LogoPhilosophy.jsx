@@ -36,8 +36,8 @@ export default function LogoPhilosophy() {
         text: "Bintang menjadi lambang nilai-nilai ketuhanan,moral, etika, serta keyakinan bahwa semua ilmu dan usaha harus didasarkan pada kebaikan serta keikhlasan. 5 Arah Sudut lancip dalam bintang juga mengimplementasikan bahwa BEM FK UM selalu berlandaskan dengan ideologi Pancasila."
       },
       {
-        image: "/path-to-image6.jpg",
-        title: "",
+        image: "/Logo_Hijau.png",
+        title: "Warna Emas dan Hijau",
         text: `🟡 Warna Emas Melambangkan karakter pemimpin yang Berwibawa, bijak, beretika, dan bertanggung jawab dalam menjalankan tugas serta pengabdian kepada masyarakat. 🟢 Warna Hijau Warna hijau identik dengan dunia medis dan kesehatan, mencerminkan peran BEM FK UM dalam menjaga kesejahteraan dan keselamatan masyarakat dan senantiasa menjaga semangat inovasi, kaderisaasi, dan perkembangan ilmu kedokteran yang terus berkelanjutan.`
       }
     ];
@@ -59,7 +59,7 @@ export default function LogoPhilosophy() {
       <div className="grid gap-6 grid-cols-1 ">
         {philosophyItems.map((item, index) => (
           <div key={index} className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 p-4 border rounded-lg shadow-sm transition duration-300 ease-in-out transform hover:shadow-md hover:-translate-y-1">
-            <img src={item.image} alt={item.title} className="w-24 h-24 object-cover rounded-lg" />
+            <img src={item.image} alt={item.title} className="w-16 h-16  object-cover rounded-full md:mr-4  " />
             <div className="text-center md:text-left">
               <h3 className="text-lg font-semibold">{item.title}</h3>
               <p className="text-gray-600">{item.text}</p>
