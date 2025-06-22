@@ -18,7 +18,7 @@ export default function EditDivisiModal({ isOpen, onClose, onSave, divisi }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave({ id: divisi.id, nama, file: selectedFile });
+    onSave({ id: divisi.id, nama, ketua_nama: ketuaNama, deskripsi, file: selectedFile });
     onClose(); // langsung tutup modal
   };
 
