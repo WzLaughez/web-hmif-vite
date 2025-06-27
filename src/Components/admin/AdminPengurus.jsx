@@ -53,6 +53,7 @@ const AdminPengurus = () => {
       .upload(filePath, selectedFile);
 
     if (uploadError) {
+      console.error('Upload error:', uploadError);
       showNotification('Gagal upload gambar', 'error');
       return;
     }
@@ -126,6 +127,7 @@ const AdminPengurus = () => {
         .upload(filePath, selectedFile);
 
       if (uploadError) {
+        console.error('Upload error:', uploadError);
         showNotification('Gagal upload gambar', 'error');
         return;
       }

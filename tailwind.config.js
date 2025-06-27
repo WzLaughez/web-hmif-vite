@@ -7,13 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        SweetDaisy: '#FFFBF0', // Add your custom color here
-        Sage: '#BFDAA4', // Add your custom color here
-        Peach: '#F49069', // Add your custom color here
+        SweetDaisy: '#f3f0da', // Add your custom color here
+        Sage: '#1d1e3f', // Add your custom color here
+        Peach: '#f3f0da', // Add your custom color here
       },
       fontFamily:{
         // poppins:['Poppins'],
-        sans: ['Roboto', 'sans-serif'], // Primary font
+        sans: ['Poppins', 'sans-serif'], // Primary font
         serif: ['Merriweather', 'Georgia', 'serif'], // Secondary font
         mono: ['Courier New', 'monospace'], // Monospace font
       }

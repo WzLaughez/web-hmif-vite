@@ -7,8 +7,16 @@ const PengurusEditModal = ({ isOpen,
   onSave,
   selectedFile,
   handleFileChange }) => {
+    const [loading, setLoading] = React.useState(false);
+    const handleSave = async () => {
+    setLoading(true);
+    try {
+      await onSave(); // asumsikan onSave adalah fungsi async
+    } finally {
+      setLoading(false);
+    }
+  };
   if (!isOpen || !pengurus) return null;
-
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded w-96 relative shadow-lg">
@@ -60,10 +68,11 @@ const PengurusEditModal = ({ isOpen,
             Batal
           </button>
           <button
-            onClick={onSave}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+            onClick={handleSave}
+            className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
+            disabled={loading}
           >
-            Simpan
+            {loading ? 'Menyimpan...' : 'Simpan'}
           </button>
         </div>
       </div>

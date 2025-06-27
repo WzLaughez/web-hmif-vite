@@ -4,5 +4,6 @@
 @tailwind utilities;
 
 body{
-    background: #FFFBF0;
+    background: #1d1e3f;
+    font-family: 'Poppins', sans-serif;
 }

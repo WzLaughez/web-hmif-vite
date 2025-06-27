@@ -56,26 +56,30 @@ export default function NavBar() {
     'after:transition-transform',
     'after:duration-300',
     'after:ease-out',
-    'hover:after:scale-y-100',
-    'hover:text-black',
-    isActive ? 'text-black border-b-2 border-Peach' : (scrolled ? 'text-black' : 'text-black')
+    isActive ? 'text-white border-b-2 border-Peach' : (scrolled ? 'text-white' : 'text-white')
   ].join(' ')
 
   return (
-    <header className={`fixed p-3 top-0 left-0 right-0 w-full font-sans z-50 transition-all duration-300 
+    <header className={`fixed top-0 left-0 right-0 w-full font-sans z-50 transition-all duration-300 
       ${scrolled ? 'bg-Sage shadow-lg' : 'bg-transparent'}`}>
-      <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-3 lg:px-14 max-w-7xl">
+      <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-4 lg:px-8 max-w-7xl">
         <div className="flex lg:flex-1">
           <NavLink to="/" className="-m-1.5 p-1.5">
             <div className='flex items-center space-x-4'>
               <img
                 alt="HMIF Logo"
                 src="/Logo_Hijau.png"
-                className="h-8 w-auto"
+                className="h-10 w-auto"
               />
-              <h1 className={`font-semibold ${scrolled ? 'text-black' : 'text-black'}`}>
-                BEM FK UM 2025
+              <div>
+
+              <h1 className={`font-semibold ${scrolled ? 'text-white' : 'text-white'}`}>
+                Badan Eksekutif Mahasiswa
               </h1>
+              <h1 className={`${scrolled ? 'text-white' : 'text-white'}`}>
+                Fakultas Kedokteran Universitas Negeri Malang 2025
+              </h1>
+              </div>
             </div>
           </NavLink>
         </div>
@@ -109,12 +113,12 @@ export default function NavBar() {
         </div>
         
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-          <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-Peach px-6 py-4 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <NavLink to="/" className="-m-1.5 p-1.5">
                 <img
                   alt="HMIF Logo"
-                  src="/LogoHMIF-removebg-preview.png"
+                  src="/Logo_Hijau.png"
                   className="h-8 w-auto"
                 />
               </NavLink>
@@ -136,6 +140,11 @@ export default function NavBar() {
                   >
                     Home
                   </NavLink>
+                  <NavLink to="/about" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
+            About
+          </NavLink>
                   <NavLink
                     to="/galeri"
                     onClick={() => setMobileMenuOpen(false)}
