@@ -1,60 +1,66 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import HeroPage from '../layouts/HeroPage';
-import supabase from './admin/utils/supabaseClient'
-import { Link } from 'react-router'
+import supabase from './admin/utils/supabaseClient';
+import { Link } from 'react-router-dom';
+
 const Galeri = () => {
-  const [galeri, setGaleri] = useState([])
+  const [galeri, setGaleri] = useState([]);
   const [loading, setLoading] = useState(true);
-    useEffect(() => {
-      const fetchGaleri = async () => {
-        const { data, error } = await supabase
-          .from('galeri')
-          .select('*')
-        if (error) console.error(error)
-        else {
-          console.log(data)
-          setGaleri(data)
-        setLoading(false);}
+
+  useEffect(() => {
+    const fetchGaleri = async () => {
+      const { data, error } = await supabase
+        .from('divisi')
+        .select(`
+          id,
+          kode_divisi,
+          logo_url
+        `)
+        .order ('id', { ascending: true }); 
+
+      if (error) console.error(error);
+      else {
+        setGaleri(data);
+        setLoading(false);
       }
-  
-      fetchGaleri()
-    }, [])
+    };
+
+    fetchGaleri();
+  }, []);
+
   if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
-      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+    <div className="container mx-auto px-4 py-16 mt-16 max-w-6xl ">
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+        {galeri.map((item) => (
+          <Link
+            key={item.id}
+            to={`/galeri/${item.id}`}
+            className="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+          >
+            <img
+              src={item.logo_url || 'https://via.placeholder.com/300x150?text=No+Image'}
+              alt={item.kode_divisi}
+              className="w-full h-36 object-cover"
+            />
+            <div className="p-4 text-center">
+              <h3 className="text-lg font-semibold text-gray-800">{item.kode_divisi}</h3>
+              {/* <p className="text-sm text-gray-500">{item.deskripsi}</p> */}
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
-  )
-}
-  return (
-    <>
-    <HeroPage teks="Galeri"/>
-    <div className="container mx-auto px-4 py-16 mt-16 max-w-6xl">
-    <div className="flex flex-wrap justify-center gap-6">
-{galeri.map((item) => (
-     <Link 
-     to='#'
-     className="w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105"
-   >
-     <img 
-       src={item.image_url} 
-       alt={item.title} 
-       className="w-full h-36 object-contain"
-     />
-     <div className="p-5 flex flex-col flex-grow">
-       <div className="flex flex-col">
+  );
+};
 
-       <h3 className="text-xl font-semibold text-center text-gray-800 mb-3">{item.title}</h3>
-       
-       </div>
-     </div>
-   </Link>
-))}
-</div>
-  </div>
-  </>
-  )
-}
-
-export default Galeri
+export default Galeri;

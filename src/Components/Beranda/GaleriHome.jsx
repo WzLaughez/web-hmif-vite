@@ -41,11 +41,11 @@ const GaleriHome = () => {
   return (
     <div data-aos="fade-up" className="relative w-full">
       {/* Header */}
-      <header className=" w-full">
+      <header className="w-full">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-4 flex justify-center text-center">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Galeri</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-Peach mb-4">Galeri</h2>
+          <p className="text-Peach max-w-2xl mx-auto">
           Kumpulan dokumentasi kegiatan yang diselenggarakan oleh Badan Eksekutif Mahasiswa Fakultas Kedokteran
           </p>
         </div>

@@ -32,7 +32,6 @@ const Pengumuman = () => {
 
   return (
     <>
-      <HeroPage teks="Pengumuman"/>
       <div className="container mx-auto px-4 py-16 mt-16 max-w-6xl">
       <div className="flex flex-wrap justify-center gap-6">
   {pengumuman.map((item) => (

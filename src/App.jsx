@@ -13,6 +13,8 @@ import ScrollToTopButton from './layouts/ScrollToTopButton'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import PengumumanDetail from './Components/Pengumuman/PengumumanDetail'
 import About from './Components/About'
+import SubGaleri from './Components/Galeri/SubGaleri'
+import Foto from './Components/Galeri/Foto'
 AOS.init({
   once: false,
 });
@@ -34,6 +36,8 @@ function AppRoutes() {
       <Route path="/" element={<Home key={location.pathname} />} />
       <Route path="/about" element={<About key={location.pathname} />} />
       <Route path="/galeri" element={<Galeri key={location.pathname} />} />
+      <Route path="/galeri/:divisi_id" element={<SubGaleri key={location.pathname} />} />
+      <Route path="/galeri/:divisi_id/:galeri_id" element={<Foto key={location.pathname} />} />
       <Route path="/plan" element={<Plan key={location.pathname} />} />
       <Route path="/pengumuman" element={<Pengumuman key={location.pathname} />} />
       <Route path="/pengumuman/:id" element={<PengumumanDetail key={location.pathname} />} />

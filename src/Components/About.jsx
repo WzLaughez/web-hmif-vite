@@ -9,18 +9,17 @@ const About = () => {
 
   return (
     <>
-    <HeroPage teks="About Us"/>
     
-    <div className="flex items-center justify-center gap-4 my-4">
+    <div className="flex items-center justify-center gap-4 my-4 mt-24">
     <button 
   onClick={() => setActiveComponent('organizational')} 
-  className="px-4 py-2 bg-Sage text-black rounded transition-transform duration-300 ease-in-out hover:bg-green-700 hover:text-white hover:scale-105"
+  className="px-4 py-2 bg-Peach text-black rounded transition-transform duration-300 ease-in-out hover:bg-green-700 hover:text-white hover:scale-105"
 >
   Kepengurusan
 </button>
 <button 
   onClick={() => setActiveComponent('logoPhilosophy')} 
-  className="px-4 py-2 bg-Sage text-black rounded transition-transform duration-300 ease-in-out hover:bg-green-700 hover:text-white hover:scale-105"
+  className="px-4 py-2 bg-Peach text-black rounded transition-transform duration-300 ease-in-out hover:bg-green-700 hover:text-white hover:scale-105"
 >
   Filosofi Logo
 </button>
