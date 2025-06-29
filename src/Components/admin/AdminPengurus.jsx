@@ -82,6 +82,7 @@ const AdminPengurus = () => {
     showNotification('Pengurus berhasil diperbarui', 'success');
     setShowEditModalPengurus(false);
     setSelectedFile(null); // reset file
+    await fetchData();
   }
   };
 
