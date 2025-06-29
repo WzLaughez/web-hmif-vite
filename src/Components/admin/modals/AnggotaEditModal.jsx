@@ -2,20 +2,37 @@ import { useState, useEffect } from "react";
 
 export default function EditAnggotaModal({ isOpen, onClose, onUpdate, divisiList, anggota }) {
   const [nama, setNama] = useState("");
+  const [selectedJabatan, setSelectedJabatan] = useState("");
   const [selectedDivisi, setSelectedDivisi] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (anggota) {
       setNama(anggota.nama || "");
+      setSelectedJabatan(anggota.jabatan || "");
       setSelectedDivisi(anggota.divisi_id || "");
       setSelectedFile(null);
     }
   }, [anggota]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onUpdate({ id: anggota.id, nama, divisi_id: selectedDivisi, file: selectedFile });
+    setLoading(true);
+    try {
+      await onUpdate({
+        id: anggota.id,
+        nama,
+        jabatan: selectedJabatan,
+        divisi_id: selectedDivisi,
+        file: selectedFile,
+      });
+      onClose();
+    } catch (error) {
+      console.error("Gagal update:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -47,6 +64,20 @@ export default function EditAnggotaModal({ isOpen, onClose, onUpdate, divisiList
               {divisiList.map((divisi) => (
                 <option key={divisi.id} value={divisi.id}>{divisi.nama}</option>
               ))}
+            </select>
+          </div>
+          {/* Pilih Jabatan */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Jabatan</label>
+            <select
+              className="w-full border rounded p-2"
+              value={selectedJabatan}
+              onChange={(e) => setSelectedJabatan(e.target.value)}
+              required
+            >
+              <option value="" disabled>Pilih jabatan</option>
+              <option value="Ketua">Ketua</option>
+              <option value="Anggota">Anggota</option>
             </select>
           </div>
 
@@ -84,9 +115,17 @@ export default function EditAnggotaModal({ isOpen, onClose, onUpdate, divisiList
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-60"
+              disabled={loading}
             >
-              Simpan
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Menyimpan...
+                </div>
+              ) : (
+                "Simpan"
+              )}
             </button>
           </div>
 

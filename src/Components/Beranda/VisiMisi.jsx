@@ -29,7 +29,7 @@ const VisiMisi = () => {
   <div className="absolute bottom-0 left-1/3 w-56 h-56 bg-Sage/20 rounded-full blur-2xl animate-pulse delay-3000"></div>
 
   {/* Custom floating animation */}
-  <style jsx>{`
+  <style >{`
     @keyframes float {
       0%, 100% { transform: translate(-50%, -50%) translateY(0); }
       50% { transform: translate(-50%, -50%) translateY(-20px); }
@@ -161,7 +161,7 @@ const VisiMisi = () => {
   <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-SweetDaisy/40 rounded-full blur-md animate-pulse delay-500"></div>
 
   {/* Custom animation */}
-  <style jsx>{`
+  <style >{`
     @keyframes floatDown {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(10px); }

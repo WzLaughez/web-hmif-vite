@@ -47,10 +47,10 @@ export default function LogoPhilosophy() {
       {/* Full Logo Section */}
       <div className="text-center">
         <img src="/Logo_Hijau.png" alt="Full Logo" className="w-48 mx-auto" />
-        <p className="mt-4 text-lg text-gray-600">
+        <p className="mt-4 text-lg text-Peach">
         BEM FK UM bukan hanya organisasi yang berlandaskan ketakwaan dan kekeluargaan tetapi juga wadah kepemimpinan yang progresif, harmonis, dan adaptif yang siap mencetak tenaga kesehatan berprestasi, peduli, dan inovatif yang berdampak nyata bagi masyarakat.
         </p>
-        <p>
+        <p className="mt-2 text-sm text-white">
           ~Arunika Nawasena
         </p>
       </div>
@@ -61,8 +61,8 @@ export default function LogoPhilosophy() {
           <div key={index} className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 p-4 border rounded-lg shadow-sm transition duration-300 ease-in-out transform hover:shadow-md hover:-translate-y-1">
             <img src={item.image} alt={item.title} className="w-16 h-16  object-cover rounded-full md:mr-4  " />
             <div className="text-center md:text-left">
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-gray-600">{item.text}</p>
+              <h3 className="text-lg font-bold text-Peach">{item.title}</h3>
+              <p className="text-Peach">{item.text}</p>
             </div>
           </div>
         ))}

@@ -2,16 +2,17 @@ import React , { useState } from 'react';
 import { X } from 'lucide-react';
 
 const GaleriFormModal = ({
-  
   isOpen,
   onClose,
   onSubmit,
   formData,
   handleInputChange,
   handleFileChange,
-  currentGaleri
+  currentGaleri,
+  divisiList 
 }) => {
   if (!isOpen) return null;
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -28,20 +29,47 @@ const GaleriFormModal = ({
           </button>
         </div>
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={async (e) => {
+                        e.preventDefault();
+                        setLoading(true);
+                        try {
+                          await onSubmit(e); // pastikan fungsi ini menangani async
+                          setLoading(false);
+                        } catch (err) {
+                          console.error("Submit gagal", err);
+                          setLoading(false);
+                        }
+                      }}>
+          <div className="mb-4">
+            {/* Form untuk memilih divisi */}
+            <label className="block text-gray-700 text-sm font-medium mb-2">Pilih Divisi</label>
+            <select
+              name="divisi_id"
+              value={formData.divisi_id || ""}
+              onChange={handleInputChange}
+              required
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="" disabled>Pilih divisi</option>
+              {divisiList.map((divisi) => (
+                <option key={divisi.id} value={divisi.id}>
+                  {divisi.kode_divisi}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-medium mb-2">Judul</label>
             <input
               type="text"
-              name="title"
-              value={formData.title}
+              name="deskripsi"
+              value={formData.deskripsi}
               onChange={handleInputChange}
               className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
-
-
 
           <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-medium mb-2">Upload Gambar</label>
@@ -61,10 +89,16 @@ const GaleriFormModal = ({
               Batal
             </button>
             <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              {currentGaleri ? 'Perbarui' : 'Simpan'}
+                type="submit"
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Memproses...
+                  </>
+                ) : currentGaleri ? 'Perbarui' : 'Simpan'}
             </button>
           </div>
         </form>

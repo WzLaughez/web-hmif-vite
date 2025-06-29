@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export default function EditDivisiModal({ isOpen, onClose, onSave, divisi }) {
   const [nama, setNama] = useState("");
-  const [ketuaNama, setKetuaNama] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -10,17 +9,25 @@ export default function EditDivisiModal({ isOpen, onClose, onSave, divisi }) {
   useEffect(() => {
     if (divisi) {
       setNama(divisi.nama || "");
-      setKetuaNama(divisi.ketua_nama || "");
       setDeskripsi(divisi.deskripsi || "");
       setSelectedFile(null);
     }
   }, [divisi]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave({ id: divisi.id, nama, ketua_nama: ketuaNama, deskripsi, file: selectedFile });
-    onClose(); // langsung tutup modal
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true); // ⬅️ Aktifkan loading
+
+  try {
+    await onSave({ id: divisi.id, nama, deskripsi, file: selectedFile });
+    onClose(); // Tutup modal setelah berhasil
+  } catch (error) {
+    console.error("Gagal menyimpan:", error);
+  } finally {
+    setLoading(false); // ⬅️ Matikan loading
+  }
+};
+
 
   if (!isOpen) return null;
 
@@ -49,17 +56,7 @@ export default function EditDivisiModal({ isOpen, onClose, onSave, divisi }) {
               required
             />
           </div>
-        {/* Ketua Divisi */}
-          <div>
-            <label className="block text-sm font-medium mb-1">Ketua Divisi</label>
-            <input
-              type="text"
-              className="w-full border rounded p-2"
-              value={ketuaNama}
-              onChange={(e) => setKetuaNama(e.target.value)}
-              required
-            />
-          </div>
+        
 
           {/* Deskripsi */}
           <div>
@@ -73,7 +70,7 @@ export default function EditDivisiModal({ isOpen, onClose, onSave, divisi }) {
           </div>
           {/* Upload Foto Ketua */}
           <div>
-            <label className="block text-sm font-medium mb-1">Foto Ketua (opsional)</label>
+            <label className="block text-sm font-medium mb-1">Logo (opsional)</label>
             <input
               type="file"
               accept="image/*"
@@ -93,10 +90,12 @@ export default function EditDivisiModal({ isOpen, onClose, onSave, divisi }) {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-60"
+              disabled={loading}
             >
-              Simpan
+              {loading ? 'Menyimpan...' : 'Simpan'}
             </button>
+
           </div>
         </form>
       </div>

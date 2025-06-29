@@ -77,7 +77,7 @@ export default function NavBar() {
                 Badan Eksekutif Mahasiswa
               </h1>
               <h1 className={`${scrolled ? 'text-white' : 'text-white'}`}>
-                Fakultas Kedokteran Universitas Negeri Malang 2025
+                Fakultas Kedokteran Universitas Negeri Malang
               </h1>
               </div>
             </div>

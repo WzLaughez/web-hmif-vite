@@ -6,6 +6,16 @@ export default {
   ],
   theme: {
     extend: {
+     keyframes: {
+    'neon-line': {
+      '0%': { transform: 'translateX(-100%)', opacity: '0.1' },
+      '50%': { opacity: '0.4' },
+      '100%': { transform: 'translateX(100%)', opacity: '0.1' },
+    },
+  },
+  animation: {
+    'neon-line': 'neon-line 4s linear infinite',
+  },
       colors: {
         SweetDaisy: '#f3f0da', // Add your custom color here
         Sage: '#1d1e3f', // Add your custom color here

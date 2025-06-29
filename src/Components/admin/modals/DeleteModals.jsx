@@ -8,7 +8,7 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, pengumuman }) => 
       <div className="bg-white rounded-lg w-96 p-6">
         <h3 className="text-lg font-bold mb-4">Konfirmasi Hapus</h3>
         <p className="mb-6">
-          Apakah Anda yakin ingin menghapus pengumuman "<span className="font-semibold">{pengumuman?.title}</span>"?
+          Apakah Anda yakin ingin menghapus pengumuman "<span className="font-semibold">{pengumuman?.deskripsi}</span>"?
         </p>
         <div className="flex justify-end space-x-2">
           <button

@@ -20,8 +20,10 @@ const Kabinet = () => {
   <div className="relative min-h-[15vh] w-full " data-aos ="fade-down">
     {/* Content */}
     <div className="relative min-h-screen p-8 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-Sage via-gray-900 to-Sage overflow-hidden">
+      
       <VideoProfil/>
   {/* Background decorative elements */}
+  
   <div className="absolute inset-0 opacity-30">
     <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-SweetDaisy rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
     <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-Peach rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
@@ -60,7 +62,7 @@ const Kabinet = () => {
   <div className="relative z-10 w-full max-w-6xl mb-16" data-aos="fade-up">
     <div className="relative group">
       <div className="absolute inset-0 bg-gradient-to-r from-SweetDaisy to-Peach rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
-      <Link to="#" className="relative block">
+      <Link to="/about" className="relative block">
         <div className="relative overflow-hidden rounded-3xl shadow-2xl">
           <img 
             src="/background_gaya.JPG"

@@ -103,38 +103,47 @@ const OrganizationalDevelopmentPlan = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {sections.map((section, index) => (
-          <div 
-            key={index} 
-            className=" rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 "
-          >
-            <div className="bg-Sage/50 px-4 py-3 border-b border-blue-100">
-              <h2 className="text-lg font-semibold text-black">
-                {index + 1}. {section.title}
-              </h2>
-            </div>
-            <div className="p-4">
-              <div className="space-y-3">
-                {section.programs.map((program, programIndex) => (
-                  <div 
-                    key={programIndex} 
-                    className="flex items-start gap-2 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <div className="text-blue-500 mt-1">→</div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 text-sm">{program.name}</h3>
-                      <p className="text-gray-600 mt-1 text-sm">{program.description}</p>
-                    </div>
-                  </div>
-                ))}
+    <div className="max-w-6xl mx-auto p-6 mt-24">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {sections.map((section, index) => (
+      <div 
+        key={index} 
+        className="bg-gradient-to-br from-[#1e1e2f] to-[#151522] rounded-xl ring-1 ring-white/10 shadow-lg transition-all duration-300 hover:ring-2 hover:ring-SweetDaisy/30"
+      >
+        {/* Header */}
+        <div className="px-5 py-4 border-b border-white/10">
+          <h2 className="text-lg font-bold text-white">
+            {index + 1}. {section.title}
+          </h2>
+        </div>
+
+        {/* Program Items */}
+        <div className="p-5">
+          <div className="space-y-4">
+            {section.programs.map((program, i) => (
+              <div 
+                key={i}
+                className="group flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors duration-300"
+              >
+                <div className="mt-1 text-SweetDaisy text-lg">→</div>
+                <div>
+                  <h3 className="font-semibold text-white text-sm group-hover:text-SweetDaisy transition-colors">
+                    {program.name}
+                  </h3>
+                  <p className="text-gray-300 mt-1 text-sm leading-relaxed">
+                    {program.description}
+                  </p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
-    </div>
+    ))}
+  </div>
+</div>
+
+
   );
 };
 

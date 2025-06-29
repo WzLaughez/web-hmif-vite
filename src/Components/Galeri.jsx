@@ -14,7 +14,7 @@ const Galeri = () => {
         .select(`
           id,
           kode_divisi,
-          logo_url
+          ketua_foto_url
         `)
         .order ('id', { ascending: true }); 
 
@@ -48,9 +48,9 @@ const Galeri = () => {
             className="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105"
           >
             <img
-              src={item.logo_url || 'https://via.placeholder.com/300x150?text=No+Image'}
+              src={item.ketua_foto_url || 'https://via.placeholder.com/300x150?text=No+Image'}
               alt={item.kode_divisi}
-              className="w-full h-36 object-cover"
+              className="w-full h-fit object-cover"
             />
             <div className="p-4 text-center">
               <h3 className="text-lg font-semibold text-gray-800">{item.kode_divisi}</h3>

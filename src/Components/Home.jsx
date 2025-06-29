@@ -7,6 +7,7 @@ import GaleriHome from './Beranda/GaleriHome'
 import Footer from '../layouts/Footer'
 import ArticleSection from './Beranda/Pengumuman'
 import Kabinet from './Beranda/Kabinet'
+import SocialMedia from './Beranda/SocialMedia'
 
 const images = [
   { src: '/LogoHMIF-removebg-preview.png', title: 'Image 1' },
@@ -21,6 +22,7 @@ const Home = () => {
     <VisiMisi/>
     <ArticleSection/>
     <GaleriHome images={images}/>
+    <SocialMedia/>
     </>
   )
 }

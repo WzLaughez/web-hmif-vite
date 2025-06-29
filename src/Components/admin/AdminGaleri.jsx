@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import supabase from './utils/supabaseClient';
-import PengumumanFormModal from './modals/PengumumanFormModal';
-import DeleteConfirmationModal from './modals/DeleteModals';
 import GaleriFormModal from './modals/GaleriFormModal';
+import DeleteConfirmationModal from './modals/DeleteModals';
 import { Link } from 'react-router-dom';
 import {
-  Search, PlusCircle, Edit, Trash2, AlertCircle, X,
-  ChevronLeft, ChevronRight, Users, FileText, Menu, GalleryHorizontal
+  Search, PlusCircle, Edit, Trash2,
+  ChevronLeft, ChevronRight, Users,
+  FileText, Menu, GalleryHorizontal
 } from 'lucide-react';
 
 const AdminGaleri = () => {
-  const [galeris, setGaleris] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [subgaleri, setSubgaleri] = useState([]);
+  const [divisi, setDivisi] = useState([]);
+  const [galeriDivisi, setGaleriDivisi] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showSidebar, setShowSidebar] = useState(true);
@@ -21,26 +21,26 @@ const AdminGaleri = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentGaleri, setCurrentGaleri] = useState(null);
   const [notification, setNotification] = useState({ show: false, message: '', type: '' });
-  const [formData, setFormData] = useState({
-    title: '',
-    image_url: ''
-  });
-const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
+  const [formData, setFormData] = useState({ deskripsi: '',divisi_id: '', image_url: '' });
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const itemsPerPage = 5;
 
-  const fetchGaleri = async () => {
+  const fetchGaleriData = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from('galeri').select('*');
-    if (error) setError('Gagal memuat data');
-    else setGaleris(data);
+    const [{ data: galeriDivisi }, { data: divisi }, { data: subgaleri }] = await Promise.all([
+      supabase.from('galeri_divisi').select('*').order('id', { ascending: false }),
+      supabase.from('divisi').select('id,kode_divisi'),
+      supabase.from('subgaleri').select('*').order('created_at', { ascending: false }),
+    ]);
+    setGaleriDivisi(galeriDivisi || []);
+    setDivisi(divisi || []);
+    setSubgaleri(subgaleri || []);
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchGaleri();
+    fetchGaleriData();
   }, []);
 
   const handleSearch = (e) => {
@@ -48,14 +48,14 @@ const handleFileChange = (e) => {
     setCurrentPage(1);
   };
 
-  const filteredGaleris = galeris.filter((item) =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredGaleris = subgaleri.filter((item) =>
+  //   item.deskripsi.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredGaleris.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(filteredGaleris.length / itemsPerPage);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = filteredGaleris.slice(indexOfFirstItem, indexOfLastItem);
+  // const totalPages = Math.ceil(filteredGaleris.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -65,10 +65,10 @@ const handleFileChange = (e) => {
   };
 
   const confirmDelete = async () => {
-    const { error } = await supabase.from('galeri').delete().eq('id', currentGaleri.id);
+    const { error } = await supabase.from('galeri_divisi').delete().eq('id', currentGaleri.id);
     if (!error) {
-      setGaleris(galeris.filter(item => item.id !== currentGaleri.id));
       showNotification('Galeri berhasil dihapus', 'success');
+      fetchGaleriData();
     } else {
       showNotification('Gagal menghapus galeri', 'error');
     }
@@ -78,7 +78,7 @@ const handleFileChange = (e) => {
   const handleEdit = (galeri) => {
     setCurrentGaleri(galeri);
     setFormData({
-      title: galeri.title,
+      deskripsi: galeri.deskripsi,
       image_url: galeri.image_url
     });
     setShowEditModal(true);
@@ -86,11 +86,19 @@ const handleFileChange = (e) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
   };
 
-  const handleAddForm = async () => {
-    let image_url = '';
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let image_url = formData.image_url;
 
     if (selectedFile) {
       const fileExt = selectedFile.name.split('.').pop();
@@ -102,7 +110,6 @@ const handleFileChange = (e) => {
         .upload(filePath, selectedFile);
 
       if (uploadError) {
-        console.error('Upload error:', uploadError);
         showNotification('Gagal upload gambar', 'error');
         return;
       }
@@ -115,47 +122,40 @@ const handleFileChange = (e) => {
       image_url = publicUrl.publicUrl;
     }
 
-    const { data, error } = await supabase
-      .from('galeri')
-      .insert([{ ...formData, image_url: image_url || '' }])
-      .select();
-
-    if (!error) {
-      setGaleris([...galeris, ...data]);
-      showNotification('Galeri berhasil ditambahkan', 'success');
-      setShowEditModal(false);
-      resetForm();
-    } else {
-      console.error('Insert error:', error);
-      showNotification('Gagal menambahkan galeri', 'error');
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
     if (currentGaleri) {
       const { error } = await supabase
-        .from('galeri')
-        .update(formData)
+        .from('galeri_divisi')
+        .update({ ...formData, image_url })
         .eq('id', currentGaleri.id);
 
       if (!error) {
-        setGaleris(galeris.map(item =>
-          item.id === currentGaleri.id ? { ...item, ...formData } : item
-        ));
         showNotification('Galeri berhasil diperbarui', 'success');
+        fetchGaleriData();
         setShowEditModal(false);
         resetForm();
       } else {
+        console.error('Error updating galeri:', error);
         showNotification('Gagal memperbarui galeri', 'error');
       }
     } else {
-      await handleAddForm();
+      const { error } = await supabase
+        .from('galeri_divisi')
+        .insert([{ ...formData, image_url }]);
+
+      if (!error) {
+        showNotification('Galeri berhasil ditambahkan', 'success');
+        fetchGaleriData();
+        setShowEditModal(false);
+        resetForm();
+      } else {
+        showNotification('Gagal menambahkan galeri', 'error');
+      }
     }
   };
 
   const resetForm = () => {
-    setFormData({ title: '', image_url: '' });
+    setFormData({ deskripsi: '', image_url: '' });
+    setSelectedFile(null);
     setCurrentGaleri(null);
   };
 
@@ -165,16 +165,18 @@ const handleFileChange = (e) => {
   };
 
   if (loading) {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
-      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-gray-600 font-medium">Loading data, please wait…</p>
-    </div>
-  )
-}
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100 space-y-2">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-600 font-medium">Loading data, please wait…</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen bg-gray-100">
-  {/* Sidebar */}
+      {/* Render other components like sidebar, header, table list, pagination, etc. */}
+        {/* Sidebar */}
   <div className={`bg-blue-800 text-white ${showSidebar ? 'w-64' : 'w-16'} transition-all`}>
     <div className="p-4 flex items-center justify-between">
       {showSidebar && <h1 className="text-xl font-bold">Admin Panel</h1>}
@@ -242,93 +244,72 @@ const handleFileChange = (e) => {
       </div>
 
       {/* Konten galeri */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr className="bg-gray-50 border-b">
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Judul</th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Gambar</th>
-              <th className="px-4 py-3 text-center text-sm font-medium text-gray-500">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.length > 0 ? (
-              currentItems.map((item) => (
-                <tr key={item.id} className="border-b hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium">{item.title}</td>
-                  <td className="px-4 py-3">
-                    <img
-                      src={item.image_url || "/api/placeholder/48/48"}
-                      alt={item.title}
-                      className="w-12 h-12 object-cover rounded-md"
-                    />
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <div className="flex justify-center space-x-2">
-                      <button
-                        className="p-1 text-blue-600 hover:bg-blue-100 rounded"
-                        onClick={() => handleEdit(item)}
-                      >
-                        <Edit size={18} />
-                      </button>
-                      <button
-                        className="p-1 text-red-600 hover:bg-red-100 rounded"
-                        onClick={() => handleDelete(item)}
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="px-4 py-8 text-center text-gray-500">
-                  Tidak ada galeri yang ditemukan
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      {divisi.map((dvs) => {
+  const galeriDivisiForThisDivisi = galeriDivisi.filter(g => g.divisi_id === dvs.id);
 
-      {/* Pagination */}
-      {filteredGaleris.length > itemsPerPage && (
-        <div className="flex justify-between items-center mt-4">
-          <div className="text-sm text-gray-500">
-            Menampilkan {indexOfFirstItem + 1} - {Math.min(indexOfLastItem, filteredGaleris.length)} dari {filteredGaleris.length} galeri
-          </div>
-          <div className="flex space-x-1">
-            <button
-              className={`p-2 rounded ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
-              onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft size={16} />
-            </button>
+  return (
+    <div key={dvs.id} className="mb-10">
+      <h2 className="text-xl font-bold mb-4">{dvs.kode_divisi}</h2>
 
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index}
-                className={`w-8 h-8 rounded ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-100'}`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
+      {galeriDivisiForThisDivisi.length === 0 ? (
+        <p className="text-gray-500 mb-6">Tidak ada galeri untuk divisi ini.</p>
+      ) : (
+        galeriDivisiForThisDivisi.map((galeriDivisiItem) => {
 
-            <button
-              className={`p-2 rounded ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
-              onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
-        </div>
+          return (
+            <div key={galeriDivisiItem.id} className="mb-6">
+              <table className="min-w-full table-fixed bg-white shadow rounded-md border">
+                <thead>
+                  <tr className="bg-gray-50 border-b">
+                    <th className="px-4 py-3 text-sm font-medium text-gray-600 text-left w-1/2">Judul</th>
+                    <th className="px-4 py-3 text-sm font-medium text-gray-600 text-center w-1/4">Gambar</th>
+                    <th className="px-4 py-3 text-sm font-medium text-gray-600 text-center w-1/4">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr key={galeriDivisiItem.id} className="border-b hover:bg-gray-50">
+                    <td className="px-4 py-3 text-left font-medium truncate">
+                      <Link to={`/admin/galeri/${galeriDivisiItem.id}`} className="hover:text-blue-600">
+                        {galeriDivisiItem.deskripsi}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <img
+                        src={galeriDivisiItem.image_url || "/api/placeholder/48/48"}
+                        alt={galeriDivisiItem.deskripsi}
+                        className="w-12 h-12 object-cover rounded-md mx-auto"
+                      />
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <div className="flex justify-center space-x-2">
+                        <button
+                          className="p-1 text-blue-600 hover:bg-blue-100 rounded"
+                          onClick={() => handleEdit(galeriDivisiItem)}
+                        >
+                          <Edit size={18} />
+                        </button>
+                        <button
+                          className="p-1 text-red-600 hover:bg-red-100 rounded"
+                          onClick={() => handleDelete(galeriDivisiItem)}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          );
+        })
       )}
+    </div>
+  );
+})}
 
-      {/* Edit/Add Modal */}
+
+      
       <GaleriFormModal
         isOpen={showEditModal}
         onClose={() => setShowEditModal(false)}
@@ -337,6 +318,7 @@ const handleFileChange = (e) => {
         handleInputChange={handleInputChange}
         handleFileChange={handleFileChange}
         currentGaleri={currentGaleri}
+        divisiList={divisi}
       />
 
       <DeleteConfirmationModal
@@ -346,13 +328,11 @@ const handleFileChange = (e) => {
         pengumuman={currentGaleri}
       />
     </div>
-
     <footer className="bg-white p-4 shadow mt-auto">
-      <p className="text-center text-gray-600">© 2023 Admin Panel</p>
+      <p className="text-center text-gray-600">© {new Date().getFullYear()} BEM FK UM. All rights reserved.</p>
     </footer>
   </div>
-</div>
-
+  </div>
   );
 };
 

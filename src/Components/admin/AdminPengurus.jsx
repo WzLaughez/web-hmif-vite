@@ -171,7 +171,7 @@ const AdminPengurus = () => {
     setCurrentDivisi(d);
     setShowEditModalDivisi(true); // Tampilkan modal edit divisi
   };
-  const handleUpdateDivisi = async ({ id, nama, ketua_nama, deskripsi, file }) => {
+  const handleUpdateDivisi = async ({ id, nama, deskripsi, file }) => {
   let imageUrl = currentDivisi.ketua_foto;
 
   if (file) {
@@ -198,7 +198,7 @@ const AdminPengurus = () => {
 
   const { error } = await supabase
     .from('divisi')
-    .update({ nama, ketua_nama, deskripsi, ketua_foto_url: imageUrl })
+    .update({ nama, deskripsi, ketua_foto_url: imageUrl })
     .eq('id', id);
 
   if (error) {
@@ -270,7 +270,7 @@ const AdminPengurus = () => {
     setCurrentAnggota(anggota);
     setShowEditModalAnggota(true); // tampilkan modal edit anggota
   };
-  const handleUpdateAnggota = async ({ id, nama, divisi_id, file }) => {
+  const handleUpdateAnggota = async ({ id,jabatan, nama, divisi_id, file }) => {
     let imageUrl = currentAnggota.foto;
 
     // Jika ada file baru, upload
@@ -298,7 +298,7 @@ const AdminPengurus = () => {
     // Update di tabel anggota_divisi
     const { error } = await supabase
       .from('anggota_divisi')
-      .update({ nama, divisi_id, foto_url: imageUrl })
+      .update({ nama, jabatan, divisi_id, foto_url: imageUrl })
       .eq('id', id);
 
     if (error) {
@@ -308,6 +308,7 @@ const AdminPengurus = () => {
       setShowEditModalAnggota(false);
       setCurrentAnggota(null);
       // refresh list anggota_divisi Anda
+  await fetchData();
     }
   };
 
@@ -540,7 +541,6 @@ const handleFileChange = (e) => {
               ) : (
                 <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mr-3">👤</div>
               )}
-              <span className="text-sm font-medium">Ketua : {d.ketua_nama}</span>
                         <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2" onClick={() => handleEditDivisi(d)}>
                           <Edit size={18} />
                         </button>
@@ -553,8 +553,9 @@ const handleFileChange = (e) => {
         <table className="min-w-full bg-white border border-gray-200 rounded">
           <thead className="bg-blue-50 text-gray-600 text-sm">
             <tr>
-              <th className="p-2 border-b border-gray-200 text-left">Foto</th>
+              <th className="p-2 border-b border-gray-200 text-left">Jabatan</th>
               <th className="p-2 border-b border-gray-200 text-left">Nama Anggota</th>
+              <th className="p-2 border-b border-gray-200 text-left">Foto</th>
               <th className="p-2 border-b border-gray-200 text-center">Aksi</th>
             </tr>
           </thead>
@@ -562,6 +563,8 @@ const handleFileChange = (e) => {
                 {d.anggota_divisi.length > 0 ? (
                   d.anggota_divisi.map((anggota) => (
                     <tr key={anggota.id} className="hover:bg-blue-50">
+                        <td className="p-2 border-b border-gray-200 text-sm">{anggota.jabatan}</td>
+                        <td className="p-2 border-b border-gray-200 text-sm">{anggota.nama}</td>
                       <td className="p-2 border-b border-gray-200">
                         {anggota.foto_url ? (
                           <img
@@ -573,7 +576,6 @@ const handleFileChange = (e) => {
                           <div className="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center">👥</div>
                         )}
                       </td>
-                      <td className="p-2 border-b border-gray-200 text-sm">{anggota.nama}</td>
                       <td className="p-2 border-b border-gray-200 text-center">
                         <button className="text-blue-600 hover:bg-blue-100 p-1 rounded mr-2" onClick={() => handleEditAnggota(anggota)}>
                           <Edit size={18} />

@@ -4,6 +4,7 @@ import AdminPengumuman from './admin/AdminPengumuman';
 import { Routes, Route } from 'react-router';
 import AdminGaleri from './admin/AdminGaleri';
 import AdminPengurus from './admin/AdminPengurus';
+import GaleriDetail from './admin/AdminGaleriDetail';
 
 const Admin = () => {
   return (
@@ -11,6 +12,7 @@ const Admin = () => {
     <Routes>
       <Route path="/" element={<AdminPengumuman />} />
       <Route path="/galeri" element={<AdminGaleri />} />
+      <Route path="/galeri/:galeriDivisiId" element={<GaleriDetail />} />
       <Route path="/pengurus" element={<AdminPengurus />} />
     </Routes>
     </>

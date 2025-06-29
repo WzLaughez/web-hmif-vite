@@ -3,14 +3,16 @@ import { FaArrowRight } from "react-icons/fa";
 import supabase from '../admin/utils/supabaseClient'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const ArticleCard = ({ id, title, date, description, image }) => {
   return (
+    
         <Link
           to={`/pengumuman/${id}`}
           className="text-Peach hover:text-Sage font-medium transition-colors duration-300 mt-auto"
         >
+          
     <div className="relative bg-white/100 backdrop-blur-md border border-white/20 rounded-2xl shadow-xl overflow-hidden h-full flex flex-col group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(255,175,145,0.3)]">
       
       {/* Glow border layer */}
@@ -65,12 +67,19 @@ const ArticleSection = () => {
   
   return (
     <div className="py-8 mt-4" data-aos="fade-up">
+      
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-Peach mb-4">Latest Announcements</h2>
-          <p className="text-Peach max-w-2xl mx-auto font-medium text-lg">
-            Stay updated with the latest news, events, and announcements from our department.
-          </p>
+        
+        <div className="mx-auto max-w-4xl px-6 sm:px-6 lg:px-8 py-4 flex justify-center text-center">
+          <div className="mb-3">
+            <h4 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-Peach via-purple-300 to-Peach text-transparent bg-clip-text pb-2">
+              Pengumuman
+            </h4>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+            <p className="text-gray-300 mt-6 text-lg">
+              Dapatkan Informasi Terbaru Seputar Kegiatan BEM FK Universitas Negeri Malang
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

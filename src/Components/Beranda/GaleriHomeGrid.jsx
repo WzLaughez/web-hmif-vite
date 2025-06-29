@@ -10,12 +10,12 @@ const GaleriHomeGrid = ({ images }) => {
         >
           <img 
             src={image.image_url} 
-            alt={image.title} 
+            alt={image.nama_kegiatan} 
             className="w-full aspect-square object-cover bg-gray-200 transition-transform duration-300 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <h3 className="text-white text-center text-lg font-semibold p-2">
-              {image.title}
+              {image.nama_kegiatan}
             </h3>
           </div>
         </div>
