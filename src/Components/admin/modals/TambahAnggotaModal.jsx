@@ -3,12 +3,13 @@ import { useState } from "react";
 export default function TambahAnggotaModal({ isOpen, onClose, onAdd, divisiList }) {
   const [nama, setNama] = useState("");
   const [selectedDivisi, setSelectedDivisi] = useState("");
+  const [selectedJabatan, setSelectedJabatan] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await onAdd({ nama, divisi_id: selectedDivisi, file: selectedFile }); 
+    await onAdd({ nama, divisi_id: selectedDivisi, jabatan: selectedJabatan, file: selectedFile }); 
     setLoading(false);
     onClose();
     setNama("");
@@ -47,7 +48,20 @@ export default function TambahAnggotaModal({ isOpen, onClose, onAdd, divisiList 
               ))}
             </select>
           </div>
-
+          {/* Pilih Jabatan */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Jabatan</label>
+            <select
+              className="w-full border rounded p-2"
+              value={selectedJabatan}
+              onChange={(e) => setSelectedJabatan(e.target.value)}
+              required
+            >
+              <option value="" disabled>Pilih jabatan</option>
+              <option value="Ketua">Ketua</option>
+              <option value="Anggota">Anggota</option>
+            </select>
+          </div>
           {/* Nama Anggota */}
           <div>
             <label className="block text-sm font-medium mb-1">Nama Anggota</label>

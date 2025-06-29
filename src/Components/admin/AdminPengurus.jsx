@@ -230,7 +230,7 @@ const AdminPengurus = () => {
 
 
   // Tambah Anggota Divisi
-  const handleAddAnggota = async ({ nama, divisi_id, file }) => {
+  const handleAddAnggota = async ({ nama, divisi_id,jabatan, file }) => {
     let imageUrl = '';
     if (file) {
       const fileExt = file.name.split('.').pop();
@@ -256,7 +256,7 @@ const AdminPengurus = () => {
 
     const { error } = await supabase
       .from('anggota_divisi')
-      .insert([{ nama, divisi_id, foto_url: imageUrl }]);
+      .insert([{ nama, divisi_id,jabatan, foto_url: imageUrl }]);
     if (error) {
       showNotification('Gagal menambahkan anggota', 'error');
     } else {
@@ -348,7 +348,7 @@ const AdminPengurus = () => {
     const [{ data: pengurus }, { data: menteri }, { data: divisi }] = await Promise.all([
       supabase.from('pengurus_utama').select('*').order('id', { ascending: false }),
       supabase.from('menteri').select('*'),
-      supabase.from('divisi').select('*, anggota_divisi(*)'),
+      supabase.from('divisi').select('*, anggota_divisi(*)')
     ]);
     setPengurusData(pengurus || []);
     setMenteriData(menteri || []);
@@ -561,7 +561,13 @@ const handleFileChange = (e) => {
           </thead>
             <tbody>
                 {d.anggota_divisi.length > 0 ? (
-                  d.anggota_divisi.map((anggota) => (
+                   [...d.anggota_divisi] // salin array agar tidak mutasi langsung
+                    .sort((a, b) => {
+                      // Jika a.jabatan adalah "Ketua", posisikan paling depan
+                      if (a.jabatan === "Ketua") return -1;
+                      if (b.jabatan === "Ketua") return 1;
+                      return 0; // urutan lainnya tetap
+                    }).map((anggota) => (
                     <tr key={anggota.id} className="hover:bg-blue-50">
                         <td className="p-2 border-b border-gray-200 text-sm">{anggota.jabatan}</td>
                         <td className="p-2 border-b border-gray-200 text-sm">{anggota.nama}</td>
