@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Mail, Phone, Youtube, Facebook, Twitter, Instagram, Linkedin, ArrowUp } from 'lucide-react';
-
+import { Youtube, Instagram, Twitter, Mail, Link, Music, ArrowUp } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 const SocialFooter = () => {
@@ -11,42 +10,56 @@ const SocialFooter = () => {
         });
       }, []);
   const socialLinks = [
-    { 
-      icon: Youtube, 
-      link: "#", 
-      color: "bg-gradient-to-br from-red-500 to-red-600",
-      hoverColor: "hover:from-red-400 hover:to-red-500",
-      name: "YouTube"
-    },
-    { 
-      icon: Instagram, 
-      link: "#", 
-      color: "bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400",
-      hoverColor: "hover:from-purple-400 hover:via-pink-400 hover:to-orange-300",
-      name: "Instagram"
-    },
-    { 
-      icon: Facebook, 
-      link: "#", 
-      color: "bg-gradient-to-br from-blue-600 to-blue-700",
-      hoverColor: "hover:from-blue-500 hover:to-blue-600",
-      name: "Facebook"
-    },
-    { 
-      icon: Linkedin, 
-      link: "#", 
-      color: "bg-gradient-to-br from-blue-500 to-blue-600",
-      hoverColor: "hover:from-blue-400 hover:to-blue-500",
-      name: "LinkedIn"
-    },
-    { 
-      icon: Mail, 
-      link: "mailto:bemfkum@gmail.com", 
-      color: "bg-gradient-to-br from-green-500 to-emerald-600",
-      hoverColor: "hover:from-green-400 hover:to-emerald-500",
-      name: "Email"
-    },
-  ];
+  {
+    icon: Youtube,
+    link: "https://www.youtube.com/@bemfkum",
+    color: "bg-gradient-to-br from-[#FF0000] to-[#CC0000]",
+    hoverColor: "hover:from-[#e52d27] hover:to-[#b31217]",
+    name: "YouTube"
+  },
+  {
+    icon: Instagram,
+    link: "https://www.instagram.com/bemfkum?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    color: "bg-gradient-to-br from-pink-500 via-red-500 to-pink-500",
+    hoverColor: "hover:from-[#fdc468] hover:via-[#fa7e1e] hover:to-[#d62976]",
+    name: "Instagram"
+  },
+  {
+    icon: () => (
+      <img
+        src="/tiktok.svg"
+        alt="TikTok"
+        className="w-6 h-6 filter drop-shadow-[0_0_1.5px_white]"
+      />
+    ),
+    link: "https://www.tiktok.com/@bemfkum?is_from_webapp=1&sender_device=pc",
+    color: "bg-gradient-to-br from-[#25F4EE] via-[#000000] to-[#FE2C55]",
+    hoverColor: "hover:from-[#1AD6D6] hover:via-gray-900 hover:to-[#FF4F7D]",
+    name: "TikTok"
+  },
+  {
+    icon: Twitter,
+    link: "https://twitter.com/bemfkum",
+    color: "bg-gradient-to-br from-[#1DA1F2] to-[#0D8BDB]",
+    hoverColor: "hover:from-[#3ABFF8] hover:to-[#0CA5E9]",
+    name: "Twitter"
+  },
+  {
+    icon: Link,
+    link: "https://linktr.ee/bemfkum",
+    color: "bg-gradient-to-br from-[#32CD32] to-[#228B22]",
+    hoverColor: "hover:from-[#7CFC00] hover:to-[#32CD32]",
+    name: "Linktree"
+  },
+  {
+    icon: Mail,
+    link: "mailto:bemfkum@gmail.com",
+    color: "bg-gradient-to-br from-[#10B981] to-[#047857]",
+    hoverColor: "hover:from-[#34D399] hover:to-[#059669]",
+    name: "Email"
+  }
+];
+
 
   return (
     <div data-aos="fade-up" className="relative py-20 overflow-hidden">
@@ -84,7 +97,7 @@ const SocialFooter = () => {
         </div>
 
         {/* Social Icons Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
           {socialLinks.map(({ icon: Icon, link, color, hoverColor, name }, idx) => (
             <div key={idx} className="group flex flex-col items-center">
               <a

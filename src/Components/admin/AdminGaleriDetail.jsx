@@ -5,6 +5,7 @@ import { PlusCircle, Trash2,Search, Edit,ArrowLeft,
   ChevronLeft, ChevronRight, Users,
   FileText, Menu, GalleryHorizontal } from 'lucide-react';
 import SubgaleriFormModal from './modals/SubgaleriFormModal';
+import heic2any from 'heic2any';
 
 export default function GaleriDetail() {
   const { galeriDivisiId } = useParams();
@@ -59,13 +60,40 @@ const resetForm = () => {
 
   try {
     if (selectedFile) {
-      const fileExt = selectedFile.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
+      let uploadBlob = selectedFile;
+      let fileExt = selectedFile.name.split('.').pop();
+      let fileName = `${Date.now()}.${fileExt}`;
+      let contentType = selectedFile.type;
+      // 👇 Cek dan konversi jika HEIC
+      if (
+        selectedFile.type === 'image/heic' ||
+        selectedFile.name.toLowerCase().endsWith('.heic')
+      ) {
+        const converted = await heic2any({
+          blob: selectedFile,
+          toType: 'image/jpeg',
+          quality: 0.9,
+        });
+
+        const finalBlob = Array.isArray(converted) ? converted[0] : converted;
+        console.log('Converted Blob Type:', finalBlob.type);
+        uploadBlob = new File(
+          [finalBlob],
+          `${Date.now()}.jpg`,
+          { type: 'image/jpeg' } // Pastikan ini ada!
+        );
+        fileExt = 'jpg';
+        fileName = `${Date.now()}.jpg`;
+        contentType = 'image/jpeg';
+      }
+
       const filePath = `public/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('pengumuman')
-        .upload(filePath, selectedFile);
+        .upload(filePath, uploadBlob, {
+          contentType, // ⬅️ ini sangat penting!
+      });
 
       if (uploadError) throw new Error('Gagal upload gambar');
 
@@ -195,7 +223,7 @@ const resetForm = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto p-4">
         {subgaleri.map((item) => (
           <div key={item.id} className="bg-white shadow rounded overflow-hidden">
-            <img src={item.image_url} alt={item.nama_kegiatan} className="w-full h-48 object-cover" />
+            <img src={item.image_url } alt={item.nama_kegiatan} className="w-full h-48 object-cover" />
             <div className="p-3 flex justify-between items-center">
               <p className="font-medium">{item.nama_kegiatan}</p>
               <button

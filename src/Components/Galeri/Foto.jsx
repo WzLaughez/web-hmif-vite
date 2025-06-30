@@ -41,29 +41,46 @@ const Foto = () => {
 
   return (
     <div className="container mx-auto px-4 py-16 mt-16 max-w-6xl">
-      <div className="mb-6">
-        <Link 
-          to={`/galeri/${divisi_id}`}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-        >
-          Kembali ke sub Kegiatan
-        </Link>
+  {/* Tombol Kembali */}
+  <div className="mb-6">
+    <Link
+      to={`/galeri/${divisi_id}`}
+      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+    >
+      Kembali ke sub Kegiatan
+    </Link>
+  </div>
+
+  {/* Judul */}
+  <h2 className="text-2xl font-bold text-center text-Peach mb-8">
+    Foto Kegiatan
+  </h2>
+
+  {/* Grid Foto */}
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {Foto.map((item, index) => (
+    <div
+      key={index}
+      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300"
+    >
+      <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden">
+        <img
+          src={item.image_url || 'https://via.placeholder.com/300x150?text=No+Image'}
+          alt={item.nama_kegiatan || 'Foto Kegiatan'}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        />
       </div>
-      <div className="flex flex-col items-center mb-8">
-        {Foto.map((item) => (
-          <div>
-            <img
-              src={item.image_url || 'https://via.placeholder.com/300x150?text=No+Image'}
-              alt={item.deskripsi}
-              className="w-full h-36 object-cover"
-            />
-            <div className="p-4 text-center">
-              <h3 className="text-lg font-semibold text-gray-800">{item.deskripsi}</h3>
-            </div>
-          </div>
-        ))}
+      <div className="p-4">
+        <h3 className="text-base font-medium text-gray-800 text-center">
+          {item.nama_kegiatan}
+        </h3>
       </div>
     </div>
+  ))}
+</div>
+
+</div>
+
   );
 };
 

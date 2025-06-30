@@ -48,7 +48,7 @@ const SubGaleri = () => {
           Kembali ke Galeri
         </Link>
       </div>
-      <div className="flex flex-col items-center mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {subGaleri.map((item) => (
           <Link
             key={item.id}
