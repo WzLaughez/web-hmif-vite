@@ -42,31 +42,16 @@ const GaleriHome = () => {
     <div data-aos="fade-up" className="relative w-full">
       
 
-      {/* Floating particles effect */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full opacity-20 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
-            }}
-          />
-        ))}
-      </div>
       {/* Header */}
       <header className="w-full">
         
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-4 flex justify-center text-center">
           <div className="mb-2">
-          <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-Peach via-purple-300 to-Peach text-transparent bg-clip-text leading-tight">
+          <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-ungu text-transparent bg-clip-text leading-tight">
             Galeri
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
-          <p className="text-gray-300 mt-6 text-lg">
+          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-purple-500 mx-auto rounded-full"></div>
+          <p className="text-abuTua mt-6 text-lg">
             Kumpulan foto-foto kegiatan BEM FK Universitas Negeri Malang
           </p>
         </div>
@@ -102,11 +87,11 @@ const GaleriHome = () => {
         </div>
       </div>
       <div className="text-center mb-12" >
-          <button className="bg-Peach  px-8 py-3 rounded-lg hover:bg-Peach/80 transition-colors duration-200 font-medium">
+          <button className="bg-ungu  px-8 py-3 rounded-lg hover:bg-purple-200 transition-colors duration-200 font-medium">
           <Link to="/galeri">
           <div className="flex items-center space-x-2">
-            <span>View All Gallery</span>
-            <FaArrowRight className="" />
+            <span className='text-white'>View All Gallery</span>
+            <FaArrowRight className="text-white" />
           </div>
           </Link>
           </button>

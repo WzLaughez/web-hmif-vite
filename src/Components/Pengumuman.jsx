@@ -32,7 +32,10 @@ const Pengumuman = () => {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-16 mt-16 max-w-6xl">
+    <HeroPage />
+    
+      <div className="mx-auto px-4 py-16  bg-gradient-to-tr from-[#9C27B0] via-white to-[#A5D6A7] opacity-90 z-0">
+        
       <div className="flex flex-wrap justify-center gap-6">
   {pengumuman.map((item) => (
     <Link 

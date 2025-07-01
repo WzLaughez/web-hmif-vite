@@ -15,8 +15,7 @@ const Footer = () => {
       
       <footer className="relative overflow-hidden">
         {/* Modern gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-Sage via-gray-900 to-slate-800 ">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(9, 28, 59, 0.1)_50%,transparent_75%)] bg-[length:20px_20px]"></div>
+        <div className="absolute inset-0 bg-ungu backdrop-blur-lg z-0">
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
@@ -78,21 +77,21 @@ const Footer = () => {
                     {link ? (
                       <a
                         href={link}
-                        className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 
-                          hover:from-white/10 hover:to-white/15 backdrop-blur-sm border border-white/10 
+                        className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-abuTua/5 to-abuTua/10 
+                          hover:from-abuTua/10 hover:to-abuTua/15 backdrop-blur-sm border border-abuTua/10 
                           transition-all duration-300 hover:scale-105"
                       >
                         <div className={`p-2 rounded-lg bg-gradient-to-br ${color}`}>
-                          <Icon className="h-5 w-5 text-white" />
+                          <Icon className="h-5 w-5 text-abuTua" />
                         </div>
-                        <span className="text-gray-300 group-hover:text-white transition-colors duration-300">
+                        <span className="text-gray-300 group-hover:text-abuTua transition-colors duration-300">
                           {text}
                         </span>
                       </a>
                     ) : (
-                      <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10">
+                      <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-abuTua/5 to-abuTua/10 backdrop-blur-sm border border-abuTua/10">
                         <div className={`p-2 rounded-lg bg-gradient-to-br ${color}`}>
-                          <Icon className="h-5 w-5 text-white" />
+                          <Icon className="h-5 w-5 text-abuTua" />
                         </div>
                         <span className="text-gray-300">{text}</span>
                       </div>

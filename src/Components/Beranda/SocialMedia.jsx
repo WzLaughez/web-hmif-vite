@@ -64,16 +64,16 @@ const SocialFooter = () => {
   return (
     <div data-aos="fade-up" className="relative py-20 overflow-hidden">
       {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-Sage to-Sage">
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-Sage to-Sage">
         
-      </div>
+      </div> */}
 
       {/* Floating particles effect */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full opacity-20 animate-pulse"
+            className="absolute w-1 h-1 bg-ungu rounded-full opacity-20 animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -87,11 +87,11 @@ const SocialFooter = () => {
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {/* Title with enhanced styling */}
         <div className="mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-Peach via-purple-300 to-Peach text-transparent bg-clip-text leading-tight">
+          <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-ungu text-transparent bg-clip-text leading-tight">
             Connect With Us
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
-          <p className="text-gray-300 mt-6 text-lg">
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-ungu mx-auto rounded-full"></div>
+          <p className="text-abuTua mt-6 text-lg">
             Follow BEM FK Universitas Negeri Malang official social media
           </p>
         </div>
@@ -111,7 +111,7 @@ const SocialFooter = () => {
                 <Icon className="w-7 h-7 relative z-10" />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent"></div>
               </a>
-              <span className="text-gray-300 text-sm mt-3 group-hover:text-white transition-colors duration-300">
+              <span className="text-abuTua/80 text-sm mt-3 group-hover:text-abuTua transition-colors duration-300">
                 {name}
               </span>
             </div>
@@ -120,7 +120,7 @@ const SocialFooter = () => {
 
         {/* Decorative wave */}
         <div className="flex justify-center">
-          <div className="w-48 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent rounded-full"></div>
+          <div className="w-48 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent rounded-full"></div>
         </div>
       </div>
     </div>

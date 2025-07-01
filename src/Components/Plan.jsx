@@ -8,7 +8,7 @@ const Plan = () => {
 
   return (
     <>
-          <OrganizationalDevelopmentPlan />
+    
     </>
   )
 }
