@@ -23,9 +23,21 @@ const About = () => {
 >
   Filosofi Logo
 </button>
+<button 
+  onClick={() => setActiveComponent('plan')} 
+  className="px-4 py-2 bg-Peach text-black rounded transition-transform duration-300 ease-in-out hover:bg-green-700 hover:text-white hover:scale-105"
+>
+  Rencana Kerja
+</button>
 
       </div>
-      {activeComponent === 'organizational' ? <Kepengurusan /> : <LogoPhilosophy />}
+      {activeComponent === 'organizational' ? (
+  <Kepengurusan />
+) : activeComponent === 'logoPhilosophy' ? (
+  <LogoPhilosophy />
+) : activeComponent === 'plan' ? (
+  <OrganizationalDevelopmentPlan />
+) : null}
    
     </>
   )
