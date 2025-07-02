@@ -413,6 +413,12 @@ const handleFileChange = (e) => {
             {showSidebar && <span className="ml-4">Pengurus</span>}
           </div>
           </Link>
+          <Link to="/admin/karya">
+                    <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-blue-700">
+                      <FileText size={20} />
+                      {showSidebar && <span className="ml-4">Karya</span>}
+                    </div>
+                    </Link>
         </nav>
       </div>
 
@@ -626,8 +632,8 @@ const handleFileChange = (e) => {
           />
 
         <footer className="bg-white p-4 shadow mt-auto">
-          <p className="text-center text-gray-600">© 2023 Admin Panel</p>
-        </footer>
+      <p className="text-center text-gray-600">© {new Date().getFullYear()} BEM FK UM. All rights reserved.</p>
+    </footer>
       </div>
     </div>
   );

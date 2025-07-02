@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import HeroPage from '../layouts/HeroPage'
 import supabase from './admin/utils/supabaseClient'
 import { Link } from 'react-router'
-import { motion } from "framer-motion";
 const Pengumuman = () => {
   const [pengumuman, setPengumuman] = useState([])
   const [loading, setLoading] = useState(true);

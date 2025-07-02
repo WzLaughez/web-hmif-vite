@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
 const PengumumanFormModal = ({
@@ -11,6 +11,7 @@ const PengumumanFormModal = ({
   currentPengumuman
 }) => {
   if (!isOpen) return null;
+const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -27,7 +28,18 @@ const PengumumanFormModal = ({
           </button>
         </div>
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
+  try {
+    await onSubmit(e);
+    onClose(); // jika ingin otomatis tutup
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setIsLoading(false);
+  }
+}}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-medium mb-2">Judul</label>
             <input
@@ -84,11 +96,23 @@ const PengumumanFormModal = ({
               Batal
             </button>
             <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              {currentPengumuman ? 'Perbarui' : 'Simpan'}
-            </button>
+  type="submit"
+  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center justify-center min-w-[100px]"
+  disabled={isLoading}
+>
+  {isLoading ? (
+    <>
+      <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      Menyimpan...
+    </>
+  ) : (
+    currentPengumuman ? 'Perbarui' : 'Simpan'
+  )}
+</button>
+
           </div>
         </form>
       </div>

@@ -104,7 +104,7 @@ export default function NavBar() {
           <NavLink to="/galeri" className={linkClasses}>
             Galeri
           </NavLink>
-          <NavLink to="/plan" className={linkClasses}>
+          <NavLink to="/karya" className={linkClasses}>
             Karya
           </NavLink>
           <NavLink to="/pengumuman" className={linkClasses}>

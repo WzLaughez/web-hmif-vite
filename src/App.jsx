@@ -15,6 +15,7 @@ import PengumumanDetail from './Components/Pengumuman/PengumumanDetail'
 import About from './Components/About'
 import SubGaleri from './Components/Galeri/SubGaleri'
 import Foto from './Components/Galeri/Foto'
+import KaryaDetail from './Components/Karya/KaryaDetail'
 AOS.init({
   once: false,
 });
@@ -38,7 +39,8 @@ function AppRoutes() {
       <Route path="/galeri" element={<Galeri key={location.pathname} />} />
       <Route path="/galeri/:divisi_id" element={<SubGaleri key={location.pathname} />} />
       <Route path="/galeri/:divisi_id/:galeri_id" element={<Foto key={location.pathname} />} />
-      <Route path="/plan" element={<Plan key={location.pathname} />} />
+      <Route path="/karya" element={<Plan key={location.pathname} />} />
+      <Route path="/karya/:id" element={<KaryaDetail key={location.pathname} />} />
       <Route path="/pengumuman" element={<Pengumuman key={location.pathname} />} />
       <Route path="/pengumuman/:id" element={<PengumumanDetail key={location.pathname} />} />
     </Routes>

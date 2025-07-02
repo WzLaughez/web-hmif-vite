@@ -8,7 +8,7 @@ import {
   ChevronLeft, ChevronRight, Users, FileText, Menu, GalleryHorizontal
 } from 'lucide-react';
 
-const AdminPengumuman = () => {
+const AdminKarya = () => {
   const [pengumumans, setPengumumans] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ const handleFileChange = (e) => {
 
   const fetchPengumuman = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from('pengumuman').select('*');
+    const { data, error } = await supabase.from('karya').select('*');
     if (error) setError('Gagal memuat data');
     else setPengumumans(data);
     setLoading(false);
@@ -66,12 +66,12 @@ const handleFileChange = (e) => {
   };
 
   const confirmDelete = async () => {
-    const { error } = await supabase.from('pengumuman').delete().eq('id', currentPengumuman.id);
+    const { error } = await supabase.from('karya').delete().eq('id', currentPengumuman.id);
     if (!error) {
       setPengumumans(pengumumans.filter(item => item.id !== currentPengumuman.id));
-      showNotification('Pengumuman berhasil dihapus', 'success');
+      showNotification('Karya berhasil dihapus', 'success');
     } else {
-      showNotification('Gagal menghapus pengumuman', 'error');
+      showNotification('Gagal menghapus karya', 'error');
     }
     setShowDeleteModal(false);
   };
@@ -119,7 +119,7 @@ const handleFileChange = (e) => {
   }
 
   const { data, error } = await supabase
-    .from('pengumuman')
+    .from('karya')
     .insert([{
       ...formData,
       image_url: image_url || ''
@@ -128,12 +128,12 @@ const handleFileChange = (e) => {
 
   if (!error) {
     setPengumumans([...pengumumans, ...data]);
-    showNotification('Pengumuman berhasil ditambahkan', 'success');
+    showNotification('Karya berhasil ditambahkan', 'success');
     setShowEditModal(false);
     resetForm();
   } else {
     console.error('Insert error:', error);
-    showNotification('Gagal menambahkan pengumuman', 'error');
+    showNotification('Gagal menambahkan karya', 'error');
   }
 };
   const handleSubmit = async (e) => {
@@ -141,7 +141,7 @@ const handleFileChange = (e) => {
   if (currentPengumuman) {
     // update logika tetap
     const { error } = await supabase
-      .from('pengumuman')
+      .from('karya')
       .update(formData)
       .eq('id', currentPengumuman.id);
 
@@ -149,11 +149,11 @@ const handleFileChange = (e) => {
       setPengumumans(pengumumans.map(item =>
         item.id === currentPengumuman.id ? { ...item, ...formData } : item
       ));
-      showNotification('Pengumuman berhasil diperbarui', 'success');
+      showNotification('Karya berhasil diperbarui', 'success');
       setShowEditModal(false);
       resetForm();
     } else {
-      showNotification('Gagal memperbarui pengumuman', 'error');
+      showNotification('Gagal memperbarui karya', 'error');
     }
   } else {
     // gunakan ini untuk tambah baru
@@ -199,7 +199,7 @@ const handleFileChange = (e) => {
         <nav className="mt-6">
           
             <Link to="/admin" >
-              <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-blue-700 bg-blue-900">
+              <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-blue-700 ">
                 <FileText size={20} />
                 {showSidebar && <span className="ml-4">Pengumuman</span>}
               </div>
@@ -217,11 +217,11 @@ const handleFileChange = (e) => {
           </div>
           </Link>
           <Link to="/admin/karya">
-                    <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-blue-700">
-                      <FileText size={20} />
-                      {showSidebar && <span className="ml-4">Karya</span>}
-                    </div>
-                    </Link>
+          <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-blue-700 bg-blue-900">
+            <FileText size={20} />
+            {showSidebar && <span className="ml-4">Karya</span>}
+          </div>
+          </Link>
         </nav>
       </div>
 
@@ -386,4 +386,4 @@ const handleFileChange = (e) => {
   );
 };
 
-export default AdminPengumuman;
+export default AdminKarya;

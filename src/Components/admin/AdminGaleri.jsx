@@ -203,6 +203,12 @@ const AdminGaleri = () => {
           {showSidebar && <span className="ml-4">Pengurus</span>}
         </div>
       </Link>
+      <Link to="/admin/karya">
+                          <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-blue-700">
+                            <FileText size={20} />
+                            {showSidebar && <span className="ml-4">Karya</span>}
+                          </div>
+                          </Link>
     </nav>
   </div>
 
