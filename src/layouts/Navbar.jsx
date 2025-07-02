@@ -61,7 +61,7 @@ export default function NavBar() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 w-full font-sans z-50 transition-all duration-300 
-      ${scrolled ? 'bg-Sage shadow-lg' : 'bg-transparent'}`}>
+      ${scrolled ? 'bg-ungu shadow-lg' : 'bg-transparent'}`}>
       <nav aria-label="Global" className="container mx-auto flex items-center justify-between p-4 lg:px-8 max-w-7xl">
         <div className="flex lg:flex-1">
           <NavLink to="/" className="-m-1.5 p-1.5">

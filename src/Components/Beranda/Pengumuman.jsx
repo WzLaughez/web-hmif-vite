@@ -66,17 +66,17 @@ const ArticleSection = () => {
   }, [])
   
   return (
-    <div className="py-8 mt-4" data-aos="fade-up">
+    <div className="py-8 mt-4 " data-aos="fade-up">
       
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 ">
         
         <div className="mx-auto max-w-4xl px-6 sm:px-6 lg:px-8 py-4 flex justify-center text-center">
           <div className="mb-3">
-            <h4 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-Peach via-purple-300 to-Peach text-transparent bg-clip-text pb-2">
+            <h4 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-ungu to-ungu text-transparent bg-clip-text pb-2">
               Pengumuman
             </h4>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
-            <p className="text-gray-300 mt-6 text-lg">
+            <div className="w-24 h-1 bg-gradient-to-r from-ungu to-purple-500 mx-auto rounded-full"></div>
+            <p className="text-abuTua mt-6 text-lg">
               Dapatkan Informasi Terbaru Seputar Kegiatan BEM FK Universitas Negeri Malang
             </p>
           </div>
@@ -107,10 +107,10 @@ const ArticleSection = () => {
 
         <div className="text-center mt-12">
             <Link to="/pengumuman">
-          <button className="bg-Peach px-8 py-3 rounded-lg hover:bg-Peach/60 transition-colors duration-200 font-medium">
+          <button className="bg-ungu px-8 py-3 rounded-lg hover:bg-purple-400 transition-colors duration-200 font-medium">
               <div className="flex items-center space-x-2">
-                <span>View All Announcement</span>
-                <FaArrowRight />
+                <span className="text-white">View All Announcement</span>
+                <FaArrowRight className='text-white' />
               </div>
           </button>
             </Link>

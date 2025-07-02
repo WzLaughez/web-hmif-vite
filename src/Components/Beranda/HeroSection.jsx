@@ -21,7 +21,7 @@ const HeroSection = () => {
         className="w-full h-full object-cover"
       />
       {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-Sage/70" />  
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-50" />
 
     </div>
 

@@ -117,7 +117,7 @@ const PersonCard = ({ name, position, photoUrl, logo }) => {
 }
   return (
     <>
-  <div className="relative z-0 min-h-screen bg-gradient-to-t from-Sage via-[#203a43] to-transparent overflow-x-hidden overflow-y-visible pb-16">
+  <div className="relative z-0 min-h-screen bg-gradient-to-t from-transparent via-Peach/50 to-transparent overflow-x-hidden overflow-y-visible pb-16">
     {/* Neon Background Orbs */}
     <div className="absolute top-1/4 left-10 w-96 h-96 bg-Peach rounded-full blur-3xl opacity-20 animate-pulse mix-blend-screen"></div>
     <div className="absolute top-1/2 right-10 w-96 h-96 bg-[#FFD6A5] rounded-full blur-3xl opacity-20 animate-pulse delay-1000 mix-blend-screen"></div>
@@ -209,8 +209,8 @@ const PersonCard = ({ name, position, photoUrl, logo }) => {
               key={divisi.kode_divisi}
               className={`group relative px-3 py-1 md:px-4 md:py-2 rounded-md cursor-pointer transition-all duration-300 ease-in-out text-sm md:text-base ${
                 activeDivisi === divisi.kode_divisi
-                  ? 'bg-white/20 text-white font-semibold shadow-inner backdrop-blur-sm'
-                  : 'hover:bg-white/10 text-white/80 hover:text-white hover:shadow-md'
+                  ? 'bg-ungu/20 text-ungu font-semibold shadow-inner backdrop-blur-sm'
+                  : 'hover:bg-ungu/10 text-ungu/80 hover:text-ungu hover:shadow-md'
               }`}
               onClick={() => setActiveDivisi(divisi.kode_divisi)}
             >
@@ -241,10 +241,10 @@ const PersonCard = ({ name, position, photoUrl, logo }) => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-[#A0FFDA]">
+            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-ungu">
               {currentDivisi.nama}
             </h2>
-            <p className="mb-6 max-w-3xl mx-auto text-sm md:text-base text-white/80">
+            <p className="mb-6 max-w-3xl mx-auto text-sm md:text-base text-abuTua">
               {currentDivisi.deskripsi}
             </p>
 

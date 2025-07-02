@@ -17,9 +17,17 @@ export default {
     'neon-line': 'neon-line 4s linear infinite',
   },
       colors: {
-        SweetDaisy: '#f3f0da', // Add your custom color here
-        Sage: '#1d1e3f', // Add your custom color here
-        Peach: '#f3f0da', // Add your custom color here
+        SweetDaisy: '#A5D6A7 ', // Add your custom color here
+        Sage: '#9C27B0  ', // Add your custom color here
+        Peach: '#A5D6A7 ', // Add your custom color here
+        Font: '#FFD700',
+        Putih: '#FFFFFF',
+        emas: '#FFD700',
+        
+      ungu: '#9C27B0',
+      mint: '#A5D6A7',
+      mintAlt: '#B2DFDB',
+      abuTua: '#424242',
       },
       fontFamily:{
         // poppins:['Poppins'],

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import TitlePengumuman from './TitlePengumuman';
-
 import supabase from '../admin/utils/supabaseClient';
+import HeroPage from '../../layouts/HeroPage';
 
 function PengumumanDetail() {
   const { id } = useParams(); // ID dari URL
@@ -41,13 +41,14 @@ function PengumumanDetail() {
 
   return (
     <>
+    <HeroPage />
       <TitlePengumuman />
-      <div className="container mx-auto px-4 mt-12">
-        <div className="max-w-4xl mx-auto">
+      <div className="container mx-auto px-4 ">
+        <div className="max-w-4xl mx-auto mb-8">
           <div className="mb-6">
             <Link 
               to="/pengumuman" 
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+              className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition"
             >
               Kembali ke Daftar Pengumuman
             </Link>
